@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Name - Portfolio</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Tarek Shereen Darwish</h1>
+      <p>Mobile App Developer, Data Analyst and Machine Learning Engineer</p>
+    </header>
+    <!-- Navigation Bar -->
+    <nav>
+      <div class="nav-links">
+        <a href="#summary">Summary</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <!-- Dark Mode Toggle Icon -->
+      <button id="dark-mode-toggle" class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </nav>
+    <!-- Summary Section -->
+    <section id="summary" class="section">
+      <h2>Professional Summary</h2>
+      <p class="summary-text">
+        Results-driven Intelligent Systems Engineering student at Helwan
+        National University with hands-on experience in software development,
+        mobile app engineering, and machine learning. Adept at modernizing
+        legacy systems, optimizing database performance, and designing
+        cross-platform applications using Flutter and Kotlin. Proven ability to
+        deliver impactful technical solutions, including a 20% reduction in
+        system load time during a .NET migration and a 15% performance boost in
+        mobile app enhancements. Skilled in Python, Dart, AWS, and data analysis
+        tools (Power BI, Tableau), complemented by a Machine Learning
+        Specialization from Stanford University. Passionate about bridging
+        technical expertise with education, having trained 15+ students in ML
+        and Flutter with a 95% satisfaction rate. Certified AWS Cloud
+        Practitioner with a focus on scalable cloud architectures and security
+        best practices. Committed to continuous learning and leveraging
+        cutting-edge technologies to solve complex challenges.
+      </p>
+    </section>
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+      <h2>Work Experience</h2>
+      <div class="experience-item">
+        <h3>Software Engineer Intern @ Petrobel</h3>
+        <p class="duration">08/2024 - 09/2024</p>
+        <ul>
+          <li>
+            Legacy System Modernization: Spearheaded migration of legacy .NET
+            systems to modern .NET MVC architecture, optimizing code efficiency
+            and reducing application load time by 20%.
+          </li>
+          <li>
+            Mobile App Development: Collaborated on Flutter-based mobile app
+            enhancements, refining UI/UX design and boosting app performance by
+            15% through Dart code optimization and state management
+            improvements.
+          </li>
+          <li>
+            Database Optimization: Streamlined SQL query design and indexing
+            strategies, reducing query execution time by 30% and improving data
+            retrieval efficiency for enterprise applications.
+          </li>
+        </ul>
+      </div>
+      <div class="experience-item">
+        <h3>Academic Instructor @ Pixels</h3>
+        <p class="duration">10/2023 - 10/2024</p>
+        <ul>
+          <li>
+            Technical Training: Delivered hands-on instruction in Machine
+            Learning (Python, logistic regression) and Flutter (Dart, state
+            management) to 15+ students, achieving a 95% satisfaction rate
+            through personalized mentoring and interactive workshops.
+          </li>
+          <li>
+            Curriculum Development: Designed tailored course materials,
+            including slides, coding exercises, and real-world projects aligned
+            with industry standards.
+          </li>
+          <li>
+            Performance Evaluation: Conducted assessments, provided constructive
+            feedback, and resolved technical challenges to ensure student
+            mastery of complex topics.
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <h2>Projects</h2>
+      <!-- Filter Buttons -->
+      <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="data-analysis">
+          Data Analysis
+        </button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+        <button class="filter-btn" data-filter="machine-learning">
+          Machine Learning
+        </button>
+      </div>
+      <!-- Project Cards -->
+      <div class="projects-grid">
+        <div class="project-card" data-category="data-analysis">
+          <h3>Sales Trend Analysis</h3>
+          <p>Advanced analysis of retail sales data using Python and Tableau</p>
+        </div>
+        <div class="project-card" data-category="mobile, machine-learning">
+          <h3>Fitness Tracker App</h3>
+          <p>
+            Cross-platform mobile app with health monitoring features, gives
+            workout suggestions to the user and tracks their workouts.
+          </p>
+        </div>
+        <div class="project-card" data-category="machine-learning">
+          <h3>Breast Cancer Detection</h3>
+          <p>ML model achieving 92% accuracy in predicting Breast Cancer</p>
+        </div>
+      </div>
+    </section>
+    <!-- Courses Section -->
+    <section id="courses" class="section">
+      <h2>Courses</h2>
+      <div class="courses-grid">
+        <div class="course-card">
+          <h3>Machine Learning Specialization</h3>
+          <ul>
+            <li>
+              ML/DL Fundamentals: Acquired foundational knowledge of Machine
+              Learning and Deep Learning algorithms and workflows.
+            </li>
+            <li>
+              Model Development: Built and evaluated ML models, focusing on data
+              preprocessing, training, and performance assessment.
+            </li>
+            <li>
+              Practical Application: Applied techniques to real-world datasets
+              to derive actionable insights and optimize outcomes.
+            </li>
+          </ul>
+          <p class="duration">Duration: 3 months</p>
+          <a
+            href="https://www.coursera.org/specializations/machine-learning-introduction"
+            target="_blank"
+            >View Course</a
+          >
+        </div>
+        <div class="course-card">
+          <h3>AWS Cloud Practitioner</h3>
+          <ul>
+            <li>
+              Cloud Fundamentals: Gained expertise in core AWS services (EC2,
+              S3, RDS, IAM) and cloud architecture principles.
+            </li>
+            <li>
+              Deployment & Security: Implemented cloud deployment strategies and
+              adhered to security/cost optimization best practices.
+            </li>
+            <li>
+              Certification: Able to earn AWS Cloud Practitioner certification,
+              validating proficiency in cloud infrastructure management.
+            </li>
+          </ul>
+          <p class="duration">Duration: 2 months</p>
+          <a
+            href="https://aws.amazon.com/certification/certified-cloud-practitioner/"
+            target="_blank"
+            >View Course</a
+          >
+        </div>
+        <div class="course-card">
+          <h3>Mobile App Developer @ DEPI</h3>
+          <ul>
+            <li>
+              Native Development: Designed, developed, and maintained native
+              Android applications (Kotlin).
+            </li>
+            <li>
+              Cross-Platform Development: Built responsive apps using
+              Dart/Flutter and explored cross-platform best practices.
+            </li>
+            <li>
+              UI/UX Design: Translated user requirements into intuitive
+              interfaces using UI/UX principles.
+            </li>
+            <li>
+              Testing & Security: Conducted unit testing and implemented Android
+              security protocols for robust app performance.
+            </li>
+          </ul>
+          <p class="duration">Duration: 4 months</p>
+        </div>
+        <div class="course-card">
+          <h3>Data analysis @ NTI</h3>
+          <ul>
+            <li>
+              Data Preprocessing: Cleaned and prepared raw datasets (Python,
+              Pandas) for analysis.
+            </li>
+            <li>
+              Statistical Analysis: Conducted exploratory and statistical
+              analysis (Python, R, Power BI) to identify trends and drive
+              business decisions.
+            </li>
+            <li>
+              Data Visualization: Built interactive dashboards and reports
+              (Tableau) to communicate insights effectively.
+            </li>
+            <li>
+              Machine Learning: Applied regression models and ML techniques to
+              enhance analytical outcomes.
+            </li>
+          </ul>
+          <p class="duration">Duration: 4 months</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Update navigation bar to include Courses -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const navLinks = document.querySelector(".nav-links");
+        const coursesNavItem = document.createElement("a");
+        coursesNavItem.href = "#courses";
+        coursesNavItem.textContent = "Courses";
+        navLinks.appendChild(coursesNavItem);
+      });
+    </script>
+
+    <style>
+      .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin: 40px 0;
+      }
+      .course-card {
+        border: 1px solid var(--border-color);
+        padding: 25px;
+        border-radius: 12px;
+        background: var(--card-bg-color);
+        transition: all 0.3s ease;
+      }
+      .course-card h3 {
+        color: var(--text-color);
+        margin-bottom: 10px;
+      }
+      .course-card p {
+        color: var(--secondary-text-color);
+        line-height: 1.6;
+      }
+      .course-card a {
+        display: inline-block;
+        margin-top: 10px;
+        text-decoration: none;
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+      .course-card a:hover {
+        text-decoration: underline;
+      }
+    </style>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <h2>Contact Me</h2>
+      <div class="contact-info">
+        <a href="mailto:tareksheren@gmail.com" class="contact-link">
+          <i class="fas fa-envelope"></i>
+          tareksheren@gmail.com
+        </a>
+        <a
+          href="https://www.linkedin.com/in/3amtarekelgamd"
+          class="contact-link"
+          target="_blank"
+        >
+          <i class="fab fa-linkedin"></i>
+          LinkedIn Profile
+        </a>
+      </div>
+    </section>
+    <script src="js/script.js"></script>
+  </body>
+</html>
