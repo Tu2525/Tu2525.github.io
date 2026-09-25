@@ -4,11 +4,45 @@
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { profile } from '$lib/data/profile';
+	import { homeHref } from '$lib/track.svelte';
 
 	let { children } = $props();
 
 	const isHome = $derived(page.url.pathname === '/');
-	const base = $derived(isHome ? '' : '/');
+
+	// `wide` items only show on larger screens so the bar fits on one line on phones.
+	const sections = [
+		{ id: 'projects', label: 'Projects', wide: false },
+		{ id: 'experience', label: 'Experience', wide: false },
+		{ id: 'skills', label: 'Skills', wide: true },
+		{ id: 'modelling', label: '3D', wide: true },
+		{ id: 'contact', label: 'Contact', wide: false }
+	];
+
+	// Highlight the section that crosses the middle of the viewport, home page only.
+	let active = $state<string | null>(null);
+	$effect(() => {
+		if (!isHome) {
+			active = null;
+			return;
+		}
+		const seen = new Set<string>();
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					if (e.isIntersecting) seen.add(e.target.id);
+					else seen.delete(e.target.id);
+				}
+				active = sections.find((s) => seen.has(s.id))?.id ?? null;
+			},
+			{ rootMargin: '-45% 0px -50% 0px' }
+		);
+		for (const s of sections) {
+			const el = document.getElementById(s.id);
+			if (el) observer.observe(el);
+		}
+		return () => observer.disconnect();
+	});
 </script>
 
 <svelte:head>
@@ -29,14 +63,18 @@
 
 <header class="top">
 	<div class="wrap bar">
-		<a class="brand" href="/" aria-label="{profile.shortName}, home">
+		<a class="brand" href={homeHref()} aria-label="{profile.shortName}, home">
 			<span class="mark">TD</span>
 			<span class="brand-name">{profile.shortName}</span>
 		</a>
 		<nav aria-label="Main">
-			<a href="{base}#projects">Projects</a>
-			<a href="{base}#experience">Experience</a>
-			<a href="{base}#contact">Contact</a>
+			{#each sections as s (s.id)}
+				<a
+					href={isHome ? `#${s.id}` : homeHref(`#${s.id}`)}
+					class:wide={s.wide}
+					aria-current={active === s.id ? 'true' : undefined}>{s.label}</a
+				>
+			{/each}
 		</nav>
 		<ThemeToggle />
 	</div>
@@ -120,9 +158,39 @@
 		font-weight: 500;
 		color: var(--muted);
 	}
+	nav a {
+		position: relative;
+		transition:
+			color 0.2s var(--ease-out),
+			background 0.2s var(--ease-out);
+	}
 	nav a:hover {
 		color: var(--text);
 		background: var(--surface-2);
+	}
+	/* Current section: full-strength text and a short accent bar under the label. */
+	nav a[aria-current='true'] {
+		color: var(--text);
+	}
+	nav a::after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		bottom: 2px;
+		width: 14px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--accent);
+		transform: translateX(-50%) scaleX(0);
+		transition: transform 0.25s var(--ease-out);
+	}
+	nav a[aria-current='true']::after {
+		transform: translateX(-50%) scaleX(1);
+	}
+	@media (max-width: 860px) {
+		nav a.wide {
+			display: none;
+		}
 	}
 	@media (max-width: 640px) {
 		.brand-name {

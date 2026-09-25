@@ -1,10 +1,25 @@
 <script lang="ts">
+	import { afterNavigate } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
 	import { categoryLabels } from '$lib/data/projects';
 	import { profile } from '$lib/data/profile';
+	import { homeHref } from '$lib/track.svelte';
 
 	let { data } = $props();
 	const p = $derived(data.project);
+
+	// Coming from the home page, "All projects" behaves like the browser back button,
+	// so the visitor lands where they left off. Otherwise it links to the projects section.
+	let cameFromHome = $state(false);
+	afterNavigate(({ from }) => {
+		cameFromHome = from?.url.pathname === '/';
+	});
+
+	function goBack(e: MouseEvent) {
+		if (!cameFromHome || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+		e.preventDefault();
+		history.back();
+	}
 </script>
 
 <svelte:head>
@@ -17,7 +32,8 @@
 </svelte:head>
 
 <article class="wrap page">
-	<a class="back" href="/#projects"><Icon name="back" /> All projects</a>
+	<a class="back" href={homeHref('#projects')} onclick={goBack}><Icon name="back" /> All projects</a
+	>
 
 	<header>
 		<div class="meta">
