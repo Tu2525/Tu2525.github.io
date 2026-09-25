@@ -162,6 +162,7 @@ export const education = {
 
 export const certifications = [
 	'Generative AI Track, Digital Egypt Pioneers Initiative (2025–26)',
+	'Mobile Development Track (Flutter & Kotlin), Digital Egypt Pioneers Initiative (2024–25)',
 	'AWS Cloud Practitioner',
 	'Huawei HCIP-AI',
 	'Huawei ICT Associate, AI & Cloud',
