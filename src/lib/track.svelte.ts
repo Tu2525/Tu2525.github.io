@@ -11,3 +11,8 @@ export function readTrackFromUrl(url: URL) {
 export function currentTrack() {
 	return getTrack(trackState.id);
 }
+
+/** Link back to the home page that keeps the visitor's track, e.g. `/?track=ml#projects`. */
+export function homeHref(hash = '') {
+	return (trackState.id === defaultTrack ? '/' : `/?track=${trackState.id}`) + hash;
+}

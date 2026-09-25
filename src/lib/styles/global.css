@@ -1,7 +1,7 @@
 @import '@fontsource-variable/geist';
 @import '@fontsource-variable/geist-mono';
 
-/* Neutral zinc greys with one desaturated burnt-orange accent. */
+/* Neutral zinc greys with one red accent (saturation kept under 80%). */
 :root {
 	--bg: #f4f4f5;
 	--surface: #fbfbfb;
@@ -9,8 +9,8 @@
 	--text: #18181b;
 	--muted: #52525b;
 	--line: #e0e0e4;
-	--accent: #b54a1a;
-	--accent-soft: #f5e4da;
+	--accent: #c4342b;
+	--accent-soft: #fbeceb;
 	--on-accent: #fbfbfb;
 	--shadow: 0 1px 2px rgb(24 24 27 / 0.04), 0 14px 32px -18px rgb(24 24 27 / 0.22);
 
@@ -36,9 +36,9 @@
 		--text: #ececee;
 		--muted: #a1a1aa;
 		--line: #28282c;
-		--accent: #e8986a;
-		--accent-soft: #33221a;
-		--on-accent: #16110d;
+		--accent: #e8776d;
+		--accent-soft: #361a18;
+		--on-accent: #1a0e0d;
 		--shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 14px 32px -18px rgb(0 0 0 / 0.7);
 		color-scheme: dark;
 	}
@@ -51,9 +51,9 @@
 	--text: #ececee;
 	--muted: #a1a1aa;
 	--line: #28282c;
-	--accent: #e8986a;
-	--accent-soft: #33221a;
-	--on-accent: #16110d;
+	--accent: #e8776d;
+	--accent-soft: #361a18;
+	--on-accent: #1a0e0d;
 	--shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 14px 32px -18px rgb(0 0 0 / 0.7);
 	color-scheme: dark;
 }
