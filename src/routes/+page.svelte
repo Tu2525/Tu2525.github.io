@@ -4,15 +4,17 @@
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import TrackSwitcher from '$lib/components/TrackSwitcher.svelte';
 	import { projects, categoryLabels, type Category } from '$lib/data/projects';
-	import { profile, experience, skills, education, certifications } from '$lib/data/profile';
+	import { profile, experience, skills, education, certifications, mods } from '$lib/data/profile';
 	import { tracks } from '$lib/data/tracks';
 	import { trackState, readTrackFromUrl, currentTrack } from '$lib/track.svelte';
 
 	import keyedPlateIso from '$lib/assets/gallery/keyed-plate-iso.png?enhanced';
 	import keyedPlateTop from '$lib/assets/gallery/keyed-plate-top.png?enhanced';
 	import clampBlock from '$lib/assets/gallery/clamp-block-iso.png?enhanced';
-	import hopeChest from '$lib/assets/gallery/hope-chest-drawing.png?enhanced';
-	import sharpening from '$lib/assets/gallery/sharpening-drawing.png?enhanced';
+	import rifleM16 from '$lib/assets/gallery/game-rifle-m16.webp?enhanced';
+	import rifleAk from '$lib/assets/gallery/game-rifle-ak.webp?enhanced';
+	import truckCargo from '$lib/assets/gallery/game-truck-cargo.webp?enhanced';
+	import truckUral from '$lib/assets/gallery/game-truck-ural.webp?enhanced';
 
 	onMount(() => readTrackFromUrl(new URL(location.href)));
 
@@ -37,13 +39,19 @@
 		{ value: '15+', label: 'students taught ML & Flutter' }
 	];
 
-	const gallery = [
+	const gameAssets = [
+		{ src: rifleM16, caption: 'Low-poly M16-style rifle' },
+		{ src: rifleAk, caption: 'Low-poly AK-style rifle and magazine' },
+		{ src: truckCargo, caption: '6×6 cargo truck' },
+		{ src: truckUral, caption: '6×6 truck with roof lights' }
+	];
+	const cadRenders = [
 		{ src: keyedPlateIso, caption: 'Keyed mounting plate, isometric' },
 		{ src: clampBlock, caption: 'Split clamp block, isometric' },
-		{ src: keyedPlateTop, caption: 'Keyed mounting plate, top view' },
-		{ src: sharpening, caption: 'Sharpening station part, dimensioned' },
-		{ src: hopeChest, caption: 'Hope chest panel, dimensioned' }
+		{ src: keyedPlateTop, caption: 'Keyed mounting plate, top view' }
 	];
+	const totalSubscribers = mods.reduce((n, m) => n + m.subscribers, 0);
+	const fmt = (n: number) => n.toLocaleString('en-US');
 
 	const description = tracks[0].summary;
 	const jsonLd = JSON.stringify({
@@ -197,17 +205,53 @@
 	</div>
 </section>
 
-<!-- CAD / 3D -->
-<section class="section" id="cad">
+<!-- 3D modelling -->
+<section class="section" id="modelling">
 	<div class="wrap">
 		<p class="eyebrow">Beyond code</p>
-		<h2 class="section-title">CAD &amp; 3D modelling</h2>
+		<h2 class="section-title">3D modelling &amp; game mods</h2>
 		<p class="lede">
-			Woodworking parts and jigs modelled in Blender and AutoCAD, from dimensioned drawings to
-			textured renders.
+			I started out making low-poly models for Unturned mods on the Steam Workshop, with the
+			Normedian modding team. The three mods below have {fmt(totalSubscribers)} subscribers between them.
+			These days I also model woodworking parts and jigs in Blender and AutoCAD.
 		</p>
-		<div class="gallery">
-			{#each gallery as g}
+
+		<ul class="mods">
+			{#each mods as m (m.url)}
+				<li>
+					<a href={m.url} target="_blank" rel="noopener">
+						<span class="mod-top">
+							<span class="mod-title">{m.title}</span>
+							<span class="year">{m.year}</span>
+						</span>
+						<span class="mod-summary">{m.summary}</span>
+						<span class="mod-stats">
+							<span><strong>{fmt(m.subscribers)}</strong> subscribers</span>
+							<span><strong>{fmt(m.visitors)}</strong> visitors</span>
+						</span>
+						<span class="mod-link">Steam Workshop <Icon name="external" /></span>
+					</a>
+				</li>
+			{/each}
+		</ul>
+
+		<h3 class="gallery-title">Game assets</h3>
+		<div class="gallery game">
+			{#each gameAssets as g (g.caption)}
+				<figure>
+					<enhanced:img
+						src={g.src}
+						alt={g.caption}
+						sizes="(min-width: 1080px) 250px, (min-width: 640px) 45vw, 90vw"
+					/>
+					<figcaption>{g.caption}</figcaption>
+				</figure>
+			{/each}
+		</div>
+
+		<h3 class="gallery-title">Woodworking CAD</h3>
+		<div class="gallery cad">
+			{#each cadRenders as g (g.caption)}
 				<figure>
 					<enhanced:img
 						src={g.src}
@@ -493,10 +537,91 @@
 		color: var(--muted);
 		margin: -16px 0 28px;
 	}
-	.gallery {
+	.mods {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
 		gap: 16px;
+		margin: 0 0 48px;
+		padding: 0;
+		list-style: none;
+	}
+	.mods a {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		height: 100%;
+		padding: 20px;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: var(--surface);
+		text-decoration: none;
+		transition:
+			border-color 0.15s,
+			box-shadow 0.15s;
+	}
+	.mods a:hover {
+		border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+		box-shadow: var(--shadow);
+	}
+	.mod-top {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 12px;
+	}
+	.mod-title {
+		font: 600 19px/1.2 var(--font-display);
+	}
+	.year {
+		font: 12px/1 var(--font-mono);
+		color: var(--muted);
+	}
+	.mod-summary {
+		color: var(--muted);
+		font-size: 15px;
+	}
+	.mod-stats {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 16px;
+		font-size: 14px;
+		color: var(--muted);
+	}
+	.mod-stats strong {
+		color: var(--text);
+		font-family: var(--font-display);
+	}
+	.mod-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: auto;
+		padding-top: 4px;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--accent);
+	}
+	.mod-link :global(svg) {
+		width: 14px;
+		height: 14px;
+	}
+	.gallery-title {
+		font-size: 20px;
+		margin: 0 0 16px;
+	}
+	.gallery {
+		display: grid;
+		gap: 16px;
+		margin-bottom: 40px;
+	}
+	.gallery:last-child {
+		margin-bottom: 0;
+	}
+	.gallery.game {
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+	}
+	.gallery.cad {
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
 	}
 	figure {
 		margin: 0;
@@ -505,13 +630,16 @@
 		overflow: hidden;
 		background: var(--surface);
 	}
-	/* Renders are transparent and the drawings are black line art, so they sit on a fixed light "paper" in both themes. */
+	/* Renders have light or transparent backgrounds, so they sit on a fixed light "paper" in both themes. */
 	figure :global(img) {
 		width: 100%;
 		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		background: #efede7;
+	}
+	.cad figure :global(img) {
 		object-fit: contain;
 		padding: 10px;
-		background: #efede7;
 	}
 	figcaption {
 		padding: 12px 14px;

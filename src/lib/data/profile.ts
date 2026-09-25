@@ -169,3 +169,32 @@ export const certifications = [
 	'NLP, National Telecommunication Institute',
 	'React Native Bootcamp, ITI'
 ];
+
+// Unturned mods on the Steam Workshop, made with the Normedian modding team.
+// Subscriber counts as of 2026-09-25.
+export const mods = [
+	{
+		title: 'WWII Submarine',
+		year: 2018,
+		summary: 'The first working WWII submarines on the Unturned workshop. Models with Boom.',
+		subscribers: 12191,
+		visitors: 45115,
+		url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1583312406'
+	},
+	{
+		title: 'Fallout: Broken Steel',
+		year: 2019,
+		summary: 'Fallout armour sets, guns and gear brought to Unturned. Models with Media.',
+		subscribers: 11965,
+		visitors: 29774,
+		url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1688587902'
+	},
+	{
+		title: 'Normedian WWII Expansion',
+		year: 2018,
+		summary: 'An expansion to a popular WW2 mod pack. One of six modellers.',
+		subscribers: 2380,
+		visitors: 10926,
+		url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1430446698'
+	}
+];
