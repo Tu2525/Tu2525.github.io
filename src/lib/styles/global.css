@@ -65,13 +65,18 @@
 }
 
 html {
-	scroll-behavior: smooth;
 	scroll-padding-top: 80px;
 	-webkit-text-size-adjust: 100%;
 }
 
+/* Smooth scrolling only while a link on the page has focus, i.e. after clicking an in-page link.
+   A global `smooth` breaks SvelteKit's scroll restore on back navigation. */
+html:focus-within {
+	scroll-behavior: smooth;
+}
+
 @media (prefers-reduced-motion: reduce) {
-	html {
+	html:focus-within {
 		scroll-behavior: auto;
 	}
 	*,
