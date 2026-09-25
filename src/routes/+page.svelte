@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
+	import CvButton from '$lib/components/CvButton.svelte';
+	import EmailButton from '$lib/components/EmailButton.svelte';
 	import TrackSwitcher from '$lib/components/TrackSwitcher.svelte';
 	import { projects, categoryLabels, type Category } from '$lib/data/projects';
 	import { profile, experience, skills, education, certifications, mods } from '$lib/data/profile';
@@ -85,10 +87,8 @@
 		<p class="pitch rise" style="--i: 3">{track.pitch}</p>
 
 		<div class="cta rise" style="--i: 4">
-			<a class="btn primary" href={track.cv} download>
-				<Icon name="download" />Download CV
-			</a>
-			<a class="btn" href="mailto:{profile.email}"><Icon name="mail" />Email me</a>
+			<CvButton primary />
+			<EmailButton />
 			<span class="socials">
 				<a class="icon-link" href={profile.github} rel="me"><Icon name="github" label="GitHub" /></a
 				>
@@ -294,8 +294,8 @@
 			way to reach me: <a href="mailto:{profile.email}">{profile.email}</a>
 		</p>
 		<div class="cta">
-			<a class="btn primary" href="mailto:{profile.email}"><Icon name="mail" />Email me</a>
-			<a class="btn" href={track.cv} download><Icon name="download" />Download CV</a>
+			<EmailButton primary />
+			<CvButton />
 		</div>
 	</div>
 </section>
