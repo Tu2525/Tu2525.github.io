@@ -1,61 +1,60 @@
-@import '@fontsource-variable/inter';
-@import '@fontsource-variable/space-grotesk';
-@import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
 
+/* Neutral zinc greys with one desaturated burnt-orange accent. */
 :root {
-	--bg: #f6f4ef;
-	--surface: #ffffff;
-	--surface-2: #efece5;
-	--text: #1b1a17;
-	--muted: #5c5a53;
-	--line: #e2ded4;
-	--accent: #c2410c;
-	--accent-soft: #fbe7dc;
-	--on-accent: #ffffff;
-	--ok: #15803d;
-	--shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
+	--bg: #f4f4f5;
+	--surface: #fbfbfb;
+	--surface-2: #e9e9ec;
+	--text: #18181b;
+	--muted: #52525b;
+	--line: #e0e0e4;
+	--accent: #b54a1a;
+	--accent-soft: #f5e4da;
+	--on-accent: #fbfbfb;
+	--shadow: 0 1px 2px rgb(24 24 27 / 0.04), 0 14px 32px -18px rgb(24 24 27 / 0.22);
 
-	--font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
-	--font-display: 'Space Grotesk Variable', var(--font-sans);
-	--font-mono: 'JetBrains Mono Variable', ui-monospace, Menlo, Consolas, monospace;
+	--font-sans: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-display: var(--font-sans);
+	--font-mono: 'Geist Mono Variable', ui-monospace, Menlo, Consolas, monospace;
 
+	/* Shape rule: interactive controls are full pills, containers use --radius, inner items --radius-sm. */
 	--radius: 14px;
 	--radius-sm: 8px;
-	--max: 1080px;
+	--max: 1120px;
 	--gutter: clamp(16px, 4vw, 32px);
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
 	color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme='light']) {
-		--bg: #0e0f10;
-		--surface: #17181a;
-		--surface-2: #1f2023;
-		--text: #ecebe6;
-		--muted: #a3a19a;
-		--line: #2b2c30;
-		--accent: #fb923c;
-		--accent-soft: #3a2415;
+		--bg: #0e0e10;
+		--surface: #161618;
+		--surface-2: #1f1f22;
+		--text: #ececee;
+		--muted: #a1a1aa;
+		--line: #28282c;
+		--accent: #e8986a;
+		--accent-soft: #33221a;
 		--on-accent: #16110d;
-		--ok: #4ade80;
-		--shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+		--shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 14px 32px -18px rgb(0 0 0 / 0.7);
 		color-scheme: dark;
 	}
 }
 
 :root[data-theme='dark'] {
-	--bg: #0e0f10;
-	--surface: #17181a;
-	--surface-2: #1f2023;
-	--text: #ecebe6;
-	--muted: #a3a19a;
-	--line: #2b2c30;
-	--accent: #fb923c;
-	--accent-soft: #3a2415;
+	--bg: #0e0e10;
+	--surface: #161618;
+	--surface-2: #1f1f22;
+	--text: #ececee;
+	--muted: #a1a1aa;
+	--line: #28282c;
+	--accent: #e8986a;
+	--accent-soft: #33221a;
 	--on-accent: #16110d;
-	--ok: #4ade80;
-	--shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+	--shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 14px 32px -18px rgb(0 0 0 / 0.7);
 	color-scheme: dark;
 }
 
@@ -99,8 +98,9 @@ h2,
 h3,
 h4 {
 	font-family: var(--font-display);
-	line-height: 1.15;
-	letter-spacing: -0.02em;
+	font-weight: 600;
+	line-height: 1.12;
+	letter-spacing: -0.025em;
 	margin: 0;
 	text-wrap: balance;
 }
@@ -152,6 +152,30 @@ img {
 	margin-bottom: 32px;
 }
 
+/* Motion: a short load-in for the hero and a scroll reveal for blocks.
+   Both are skipped under reduced motion; the reveal needs scroll-driven animation support. */
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.rise {
+		animation: rise 0.7s var(--ease-out) both;
+		animation-delay: calc(var(--i, 0) * 70ms);
+	}
+
+	@supports (animation-timeline: view()) {
+		.reveal {
+			animation: rise linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 40%;
+		}
+	}
+}
+
 .chip {
 	display: inline-flex;
 	align-items: center;
@@ -179,13 +203,17 @@ img {
 	text-decoration: none;
 	cursor: pointer;
 	transition:
-		border-color 0.15s,
-		background 0.15s,
-		transform 0.15s;
+		border-color 0.2s var(--ease-out),
+		background 0.2s var(--ease-out),
+		transform 0.2s var(--ease-out);
 }
 
 .btn:hover {
 	border-color: var(--text);
+}
+
+.btn:active {
+	transform: translateY(1px) scale(0.98);
 }
 
 .btn.primary {

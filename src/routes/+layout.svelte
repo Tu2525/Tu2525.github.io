@@ -15,9 +15,14 @@
 	<meta name="author" content={profile.name} />
 	<meta property="og:site_name" content={profile.shortName} />
 	<meta property="og:type" content="website" />
-	<meta name="twitter:card" content="summary" />
-	<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)" />
-	<meta name="theme-color" content="#0e0f10" media="(prefers-color-scheme: dark)" />
+	<meta property="og:image" content="{profile.site}/og.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content="{profile.name}, Software Engineer" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="{profile.site}/og.png" />
+	<meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)" />
+	<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)" />
 </svelte:head>
 
 <a class="skip" href="#main">Skip to content</a>

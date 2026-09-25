@@ -113,7 +113,7 @@ export const projects: Project[] = [
 		summary:
 			'A 310-feature tree-based fraud classifier behind a FastAPI backend. SHAP picks the features that drove each decision, and Gemini turns them into a short risk explanation an analyst can read.',
 		highlights: [
-			'Returns a 0–100 risk score, a verdict and the primary risk factor for every transaction',
+			'Returns a risk score from 0 to 100, a verdict and the primary risk factor for every transaction',
 			'SHAP TreeExplainer attributions, top three features narrated by Gemini',
 			'Svelte frontend with CSV upload and sample loaders; Dockerised and deployed to Hugging Face Spaces'
 		],

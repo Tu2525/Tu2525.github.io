@@ -6,7 +6,7 @@
 	import { projects, categoryLabels, type Category } from '$lib/data/projects';
 	import { profile, experience, skills, education, certifications, mods } from '$lib/data/profile';
 	import { tracks } from '$lib/data/tracks';
-	import { trackState, readTrackFromUrl, currentTrack } from '$lib/track.svelte';
+	import { readTrackFromUrl, currentTrack } from '$lib/track.svelte';
 
 	import keyedPlateIso from '$lib/assets/gallery/keyed-plate-iso.png?enhanced';
 	import keyedPlateTop from '$lib/assets/gallery/keyed-plate-top.png?enhanced';
@@ -36,19 +36,18 @@
 		{ value: '1st', label: 'Leaders of Tomorrow hackathon' },
 		{ value: '2nd', label: 'Banha hackathon' },
 		{ value: '8', label: 'roles since 2023' },
-		{ value: '15+', label: 'students taught ML & Flutter' }
+		{ value: '15+', label: 'students taught ML and Flutter' }
 	];
 
-	const gameAssets = [
-		{ src: rifleM16, caption: 'Low-poly M16-style rifle' },
-		{ src: rifleAk, caption: 'Low-poly AK-style rifle and magazine' },
-		{ src: truckCargo, caption: '6×6 cargo truck' },
-		{ src: truckUral, caption: '6×6 truck with roof lights' }
-	];
-	const cadRenders = [
-		{ src: keyedPlateIso, caption: 'Keyed mounting plate, isometric' },
-		{ src: clampBlock, caption: 'Split clamp block, isometric' },
-		{ src: keyedPlateTop, caption: 'Keyed mounting plate, top view' }
+	// Seven renders in a 4-column grid: game assets fill the first row, the first CAD render spans two cells.
+	const gallery = [
+		{ src: rifleM16, caption: 'Low-poly M16-style rifle', kind: 'game' },
+		{ src: rifleAk, caption: 'Low-poly AK-style rifle and magazine', kind: 'game' },
+		{ src: truckCargo, caption: '6×6 cargo truck', kind: 'game' },
+		{ src: truckUral, caption: '6×6 truck with roof lights', kind: 'game' },
+		{ src: keyedPlateIso, caption: 'Keyed mounting plate, woodworking jig', kind: 'cad wide' },
+		{ src: clampBlock, caption: 'Split clamp block', kind: 'cad' },
+		{ src: keyedPlateTop, caption: 'Keyed plate, top view', kind: 'cad' }
 	];
 	const totalSubscribers = mods.reduce((n, m) => n + m.subscribers, 0);
 	const fmt = (n: number) => n.toLocaleString('en-US');
@@ -80,80 +79,108 @@
 <!-- Hero -->
 <section class="hero">
 	<div class="wrap">
-		<p class="eyebrow">{profile.location} · Open to remote &amp; relocation</p>
-		<h1>{profile.name}</h1>
-		<p class="headline">{track.headline}</p>
-		<p class="summary">{track.summary}</p>
+		<p class="eyebrow rise" style="--i: 0">{profile.location} · Open to remote and relocation</p>
+		<h1 class="rise" style="--i: 1">{profile.name}</h1>
+		<p class="headline rise" style="--i: 2">{track.headline}</p>
+		<p class="pitch rise" style="--i: 3">{track.pitch}</p>
 
-		<div class="cta">
+		<div class="cta rise" style="--i: 4">
 			<a class="btn primary" href={track.cv} download>
-				<Icon name="download" />Download CV{track.id === 'general' ? '' : ` (${track.label})`}
+				<Icon name="download" />Download CV
 			</a>
-			<a class="btn" href={profile.github} rel="me"><Icon name="github" />GitHub</a>
-			<a class="btn" href={profile.linkedin} rel="me"><Icon name="linkedin" />LinkedIn</a>
-			<a class="btn" href="mailto:{profile.email}"><Icon name="mail" />Email</a>
+			<a class="btn" href="mailto:{profile.email}"><Icon name="mail" />Email me</a>
+			<span class="socials">
+				<a class="icon-link" href={profile.github} rel="me"><Icon name="github" label="GitHub" /></a
+				>
+				<a class="icon-link" href={profile.linkedin} rel="me">
+					<Icon name="linkedin" label="LinkedIn" />
+				</a>
+			</span>
 		</div>
 
-		<TrackSwitcher />
-
-		<dl class="stats">
-			{#each stats as s}
-				<div>
-					<dt>{s.label}</dt>
-					<dd>{s.value}</dd>
-				</div>
-			{/each}
-		</dl>
+		<div class="rise" style="--i: 5">
+			<TrackSwitcher />
+		</div>
 	</div>
 </section>
 
-<!-- Featured projects -->
+<!-- Highlights -->
+<div class="wrap">
+	<dl class="stats">
+		{#each stats as s (s.label)}
+			<div class="reveal">
+				<dt>{s.label}</dt>
+				<dd>{s.value}</dd>
+			</div>
+		{/each}
+	</dl>
+</div>
+
+<!-- Projects -->
 <section class="section" id="projects">
 	<div class="wrap">
-		<p class="eyebrow">Selected work</p>
-		<h2 class="section-title">Featured projects</h2>
-		<div class="grid featured">
-			{#each featured as p (p.slug)}
-				<ProjectCard project={p} featured />
+		<h2 class="section-title">Selected work</h2>
+		<div class="featured">
+			{#each featured as p, i (p.slug)}
+				<ProjectCard project={p} lead={i === 0} />
 			{/each}
 		</div>
 
 		<div class="more-head">
 			<h3>More projects</h3>
 			<div class="filters" role="group" aria-label="Filter projects">
-				{#each filters as f}
+				{#each filters as f (f)}
 					<button type="button" aria-pressed={filter === f} onclick={() => (filter = f)}>
 						{f === 'all' ? 'All' : categoryLabels[f]}
 					</button>
 				{/each}
 			</div>
 		</div>
-		<div class="grid compact">
+		<ul class="index">
 			{#each shown as p (p.slug)}
-				<ProjectCard project={p} />
+				<li class="reveal">
+					<a class="index-main" href="/projects/{p.slug}">
+						<span class="index-title">{p.title}</span>
+						<span class="index-tagline">{p.tagline}</span>
+					</a>
+					<span class="index-meta">
+						{#if p.code.status === 'public' && p.code.url}
+							<a
+								class="icon-link small"
+								href={p.code.url}
+								target="_blank"
+								rel="noopener"
+								aria-label="{p.title} code on GitHub"
+							>
+								<Icon name="github" />
+							</a>
+						{/if}
+						<span class="index-year">{p.year}</span>
+					</span>
+				</li>
 			{:else}
-				<p class="empty">No other projects in this category. The featured ones above cover it.</p>
+				<li class="empty">Nothing else in this category. The projects above cover it.</li>
 			{/each}
-		</div>
+		</ul>
 	</div>
 </section>
 
 <!-- Experience -->
 <section class="section" id="experience">
 	<div class="wrap">
-		<p class="eyebrow">Experience</p>
-		<h2 class="section-title">Where I've worked</h2>
+		<h2 class="section-title">Experience</h2>
 		<ol class="timeline">
-			{#each experience as r}
-				<li>
+			{#each experience as r (r.title + r.org)}
+				<li class="reveal">
 					<div class="when">
-						<span>{r.start} – {r.end}</span>
+						<span>{r.start} - {r.end}</span>
 						<span class="place">{r.place}</span>
 					</div>
 					<div class="what">
-						<h3>{r.title} <span class="org">· {r.org}</span></h3>
+						<h3>{r.title}</h3>
+						<p class="org">{r.org}</p>
 						<ul>
-							{#each r.bullets as b}
+							{#each r.bullets as b (b)}
 								<li>{b}</li>
 							{/each}
 						</ul>
@@ -165,40 +192,42 @@
 			{/each}
 		</ol>
 		<p class="note">
-			<Icon name="lock" />Code written for employers and clients stays private. Ask me about it in
-			an interview.
+			<Icon name="lock" />Code I wrote for employers and clients stays private. Happy to walk
+			through it in an interview.
 		</p>
 	</div>
 </section>
 
 <!-- Skills & education -->
 <section class="section" id="skills">
-	<div class="wrap two-col">
+	<div class="wrap split">
 		<div>
-			<p class="eyebrow">Toolbox</p>
 			<h2 class="section-title">Skills</h2>
 			<dl class="skills">
 				{#each orderedSkills as [group, items] (group)}
 					<div>
 						<dt>{group}</dt>
 						<dd>
-							{#each items as s}<span class="chip">{s}</span>{/each}
+							{#each items as s (s)}<span class="chip">{s}</span>{/each}
 						</dd>
 					</div>
 				{/each}
 			</dl>
 		</div>
 		<div>
-			<p class="eyebrow">Education</p>
-			<h2 class="section-title">Education &amp; certifications</h2>
+			<h2 class="section-title">Education</h2>
 			<div class="edu">
 				<h3>{education.degree}</h3>
-				<p>{education.school} · {education.place}</p>
+				<p>{education.school}, {education.place}</p>
 				<p class="muted">{education.years}</p>
 			</div>
+			<h3 class="sub">Certifications</h3>
 			<ul class="certs">
-				{#each certifications as c}
-					<li>{c}</li>
+				{#each certifications as c (c.name)}
+					<li>
+						<span class="cert-name">{c.name}</span>
+						<span class="cert-issuer">{c.issuer}</span>
+					</li>
 				{/each}
 			</ul>
 		</div>
@@ -208,55 +237,46 @@
 <!-- 3D modelling -->
 <section class="section" id="modelling">
 	<div class="wrap">
-		<p class="eyebrow">Beyond code</p>
-		<h2 class="section-title">3D modelling &amp; game mods</h2>
-		<p class="lede">
-			I started out making low-poly models for Unturned mods on the Steam Workshop, with the
-			Normedian modding team. The three mods below have {fmt(totalSubscribers)} subscribers between them.
-			These days I also model woodworking parts and jigs in Blender and AutoCAD.
-		</p>
-
-		<ul class="mods">
-			{#each mods as m (m.url)}
-				<li>
-					<a href={m.url} target="_blank" rel="noopener">
-						<span class="mod-top">
-							<span class="mod-title">{m.title}</span>
-							<span class="year">{m.year}</span>
-						</span>
-						<span class="mod-summary">{m.summary}</span>
-						<span class="mod-stats">
-							<span><strong>{fmt(m.subscribers)}</strong> subscribers</span>
-							<span><strong>{fmt(m.visitors)}</strong> visitors</span>
-						</span>
-						<span class="mod-link">Steam Workshop <Icon name="external" /></span>
-					</a>
-				</li>
-			{/each}
-		</ul>
-
-		<h3 class="gallery-title">Game assets</h3>
-		<div class="gallery game">
-			{#each gameAssets as g (g.caption)}
-				<figure>
-					<enhanced:img
-						src={g.src}
-						alt={g.caption}
-						sizes="(min-width: 1080px) 250px, (min-width: 640px) 45vw, 90vw"
-					/>
-					<figcaption>{g.caption}</figcaption>
-				</figure>
-			{/each}
+		<div class="mods-split">
+			<div class="mods-intro">
+				<h2 class="section-title">3D modelling and game mods</h2>
+				<p class="lede">
+					Before software, I made low-poly models for Unturned mods on the Steam Workshop with the
+					Normedian modding team. Now I also model woodworking parts and jigs in Blender and
+					AutoCAD.
+				</p>
+				<p class="big-number">
+					<strong>{fmt(totalSubscribers)}</strong>
+					<span>Steam Workshop subscribers across three mods</span>
+				</p>
+			</div>
+			<ul class="mods">
+				{#each mods as m (m.url)}
+					<li class="reveal">
+						<a href={m.url} target="_blank" rel="noopener">
+							<span class="mod-top">
+								<span class="mod-title">{m.title}</span>
+								<span class="mod-year">{m.year}</span>
+							</span>
+							<span class="mod-summary">{m.summary}</span>
+							<span class="mod-stats">
+								<span><strong>{fmt(m.subscribers)}</strong> subscribers</span>
+								<span><strong>{fmt(m.visitors)}</strong> visitors</span>
+								<span class="mod-link">Steam Workshop <Icon name="external" /></span>
+							</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
 		</div>
 
-		<h3 class="gallery-title">Woodworking CAD</h3>
-		<div class="gallery cad">
-			{#each cadRenders as g (g.caption)}
-				<figure>
+		<div class="gallery">
+			{#each gallery as g (g.caption)}
+				<figure class="reveal {g.kind}">
 					<enhanced:img
 						src={g.src}
 						alt={g.caption}
-						sizes="(min-width: 1080px) 340px, (min-width: 640px) 45vw, 90vw"
+						sizes="(min-width: 1120px) 520px, (min-width: 640px) 50vw, 100vw"
 					/>
 					<figcaption>{g.caption}</figcaption>
 				</figure>
@@ -268,15 +288,14 @@
 <!-- Contact -->
 <section class="section" id="contact">
 	<div class="wrap contact">
-		<p class="eyebrow">Contact</p>
 		<h2>Hiring for a junior or graduate role?</h2>
 		<p class="lede">
-			I'm open to remote roles anywhere and to relocation with sponsorship. The fastest way to reach
-			me is email.
+			I'm open to remote roles anywhere, and to relocation with sponsorship. Email is the fastest
+			way to reach me: <a href="mailto:{profile.email}">{profile.email}</a>
 		</p>
 		<div class="cta">
-			<a class="btn primary" href="mailto:{profile.email}"><Icon name="mail" />{profile.email}</a>
-			<a class="btn" href={track.cv} download><Icon name="download" />CV (PDF)</a>
+			<a class="btn primary" href="mailto:{profile.email}"><Icon name="mail" />Email me</a>
+			<a class="btn" href={track.cv} download><Icon name="download" />Download CV</a>
 		</div>
 	</div>
 </section>
@@ -284,81 +303,125 @@
 <style>
 	/* Hero */
 	.hero {
-		padding-block: clamp(48px, 10vw, 104px) clamp(40px, 7vw, 72px);
+		padding-block: clamp(56px, 9vw, 96px) clamp(40px, 6vw, 64px);
+	}
+	.hero .eyebrow {
+		margin-bottom: 18px;
 	}
 	h1 {
-		font-size: clamp(40px, 7.5vw, 76px);
-		letter-spacing: -0.035em;
+		font-size: clamp(42px, 7vw, 72px);
+		font-weight: 600;
+		letter-spacing: -0.04em;
+		line-height: 1.02;
 	}
 	.headline {
-		margin-top: 14px;
-		font-family: var(--font-display);
-		font-size: clamp(19px, 2.6vw, 26px);
+		margin-top: 16px;
+		font-size: clamp(19px, 2.4vw, 24px);
 		font-weight: 500;
+		letter-spacing: -0.01em;
 		color: var(--accent);
 	}
-	.summary {
-		margin-top: 18px;
-		max-width: 68ch;
-		font-size: 17px;
+	.pitch {
+		margin-top: 14px;
+		max-width: 56ch;
+		font-size: 18px;
 		color: var(--muted);
 	}
 	.cta {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 		gap: 10px;
-		margin-block: 28px;
+		margin-block: 30px 26px;
 	}
+	.socials {
+		display: inline-flex;
+		gap: 2px;
+		margin-left: 4px;
+	}
+	.icon-link {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 999px;
+		color: var(--muted);
+		transition:
+			color 0.2s var(--ease-out),
+			background 0.2s var(--ease-out);
+	}
+	.icon-link:hover {
+		color: var(--text);
+		background: var(--surface-2);
+	}
+	.icon-link :global(svg) {
+		width: 22px;
+		height: 22px;
+	}
+	.icon-link.small {
+		width: 32px;
+		height: 32px;
+	}
+	.icon-link.small :global(svg) {
+		width: 17px;
+		height: 17px;
+	}
+
+	/* Highlights: plain figures, no boxes */
 	.stats {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		gap: 1px;
-		margin: 40px 0 0;
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		overflow: hidden;
-		background: var(--line);
+		gap: 24px;
+		margin: 0 0 clamp(48px, 7vw, 72px);
+		padding-top: 28px;
+		border-top: 1px solid var(--line);
 	}
 	.stats div {
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
-		padding: 18px 20px;
-		background: var(--surface);
 	}
 	.stats dd {
 		order: -1;
 		margin: 0;
-		font: 600 30px/1 var(--font-display);
+		font-size: clamp(30px, 4vw, 40px);
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		line-height: 1;
+		font-variant-numeric: tabular-nums;
 	}
 	.stats dt {
-		font-size: 13px;
+		font-size: 14px;
 		color: var(--muted);
+		max-width: 20ch;
 	}
 	@media (max-width: 720px) {
 		.stats {
 			grid-template-columns: repeat(2, 1fr);
+			row-gap: 28px;
 		}
 	}
 
-	/* Projects */
-	.grid {
+	/* Featured projects: one lead card across the top, then a 2x2 grid */
+	.featured {
 		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 16px;
 	}
-	.grid.featured {
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+	@media (max-width: 760px) {
+		.featured {
+			grid-template-columns: 1fr;
+		}
 	}
-	.grid.compact {
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-	}
+
+	/* More projects: an index list, not another card grid */
 	.more-head {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		flex-wrap: wrap;
 		gap: 12px;
-		margin: 56px 0 20px;
+		margin: 72px 0 12px;
 	}
 	.more-head h3 {
 		font-size: 22px;
@@ -373,90 +436,152 @@
 		padding: 0 14px;
 		border: 1px solid var(--line);
 		border-radius: 999px;
-		background: var(--surface);
+		background: transparent;
 		color: var(--muted);
 		font: 500 14px/1 var(--font-sans);
 		cursor: pointer;
+		transition:
+			color 0.2s var(--ease-out),
+			background 0.2s var(--ease-out),
+			border-color 0.2s var(--ease-out);
 	}
 	.filters button:hover {
 		color: var(--text);
+		border-color: var(--muted);
+	}
+	.filters button:active {
+		transform: translateY(1px);
 	}
 	.filters button[aria-pressed='true'] {
 		background: var(--text);
 		border-color: var(--text);
 		color: var(--bg);
 	}
-	.empty {
+	.index {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		column-gap: 40px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.index li {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 16px 12px;
+		margin-inline: -12px;
+		border-radius: var(--radius-sm);
+		transition: background 0.2s var(--ease-out);
+	}
+	.index li:hover {
+		background: var(--surface);
+	}
+	.index-main {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		text-decoration: none;
+		min-width: 0;
+	}
+	.index-title {
+		font-weight: 600;
+		font-size: 17px;
+	}
+	.index-main:hover .index-title {
+		color: var(--accent);
+	}
+	.index-tagline {
+		color: var(--muted);
+		font-size: 15px;
+	}
+	.index-meta {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex: none;
+		font: 12px/1 var(--font-mono);
 		color: var(--muted);
 	}
+	.index-year {
+		font-variant-numeric: tabular-nums;
+	}
+	.empty {
+		color: var(--muted);
+		padding: 16px 0;
+	}
+	@media (max-width: 760px) {
+		.index {
+			grid-template-columns: 1fr;
+		}
+	}
 
-	/* Experience */
+	/* Experience: dates beside roles, separated by space rather than rules */
 	.timeline {
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		display: grid;
+		gap: 44px;
 	}
 	.timeline > li {
 		display: grid;
-		grid-template-columns: 200px 1fr;
-		gap: 24px;
-		padding-block: 24px;
-		border-top: 1px solid var(--line);
-	}
-	.timeline > li:first-child {
-		border-top: 0;
-		padding-top: 0;
+		grid-template-columns: 190px minmax(0, 1fr);
+		gap: 32px;
 	}
 	.when {
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
+		gap: 6px;
+		padding-top: 3px;
 		font: 13px/1.4 var(--font-mono);
 		color: var(--muted);
+		font-variant-numeric: tabular-nums;
 	}
 	.place {
 		font-size: 12px;
-		opacity: 0.85;
+	}
+	.what {
+		max-width: 68ch;
 	}
 	.what h3 {
-		font-size: 19px;
+		font-size: 20px;
 	}
 	.org {
-		color: var(--muted);
+		margin-top: 2px;
+		color: var(--accent);
 		font-weight: 500;
 	}
 	.what ul {
-		margin: 10px 0 0;
+		margin: 12px 0 0;
 		padding-left: 18px;
 		display: grid;
 		gap: 6px;
 		color: var(--muted);
 	}
 	.what ul li::marker {
-		color: var(--accent);
+		color: var(--line);
 	}
 	.role-link {
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
-		margin-top: 10px;
+		margin-top: 12px;
 		font-size: 14px;
-		font-weight: 600;
+		font-weight: 500;
 		color: var(--accent);
 		text-decoration: none;
 	}
 	.role-link :global(svg) {
-		width: 14px;
-		height: 14px;
+		width: 15px;
+		height: 15px;
 	}
 	.note {
 		display: flex;
 		align-items: center;
 		gap: 10px;
-		margin-top: 28px;
-		padding: 14px 16px;
-		border: 1px dashed var(--line);
-		border-radius: var(--radius-sm);
+		margin-top: 48px;
 		color: var(--muted);
 		font-size: 14px;
 	}
@@ -478,24 +603,24 @@
 	}
 
 	/* Skills & education */
-	.two-col {
+	.split {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 48px;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 56px;
 	}
 	@media (max-width: 860px) {
-		.two-col {
+		.split {
 			grid-template-columns: 1fr;
 		}
 	}
 	.skills {
 		margin: 0;
 		display: grid;
-		gap: 20px;
+		gap: 22px;
 	}
 	.skills dt {
 		font-weight: 600;
-		margin-bottom: 8px;
+		margin-bottom: 10px;
 	}
 	.skills dd {
 		margin: 0;
@@ -504,10 +629,10 @@
 		gap: 6px;
 	}
 	.edu {
-		padding: 20px;
-		border: 1px solid var(--line);
+		padding: 22px;
 		border-radius: var(--radius);
 		background: var(--surface);
+		border: 1px solid var(--line);
 		display: grid;
 		gap: 4px;
 	}
@@ -518,50 +643,91 @@
 		color: var(--muted);
 		font-size: 14px;
 	}
+	.sub {
+		font-size: 17px;
+		margin: 32px 0 14px;
+	}
 	.certs {
-		margin: 20px 0 0;
+		margin: 0;
 		padding: 0;
 		list-style: none;
 		display: grid;
-		gap: 0;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px 24px;
 	}
 	.certs li {
-		padding: 10px 0;
-		border-bottom: 1px solid var(--line);
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.cert-name {
+		font-weight: 500;
 		font-size: 15px;
 	}
-
-	/* Gallery */
-	.lede {
-		max-width: 62ch;
+	.cert-issuer {
+		font-size: 13px;
 		color: var(--muted);
-		margin: -16px 0 28px;
+	}
+	@media (max-width: 480px) {
+		.certs {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* 3D modelling: intro and headline number beside the mod list, then one gallery grid */
+	.mods-split {
+		display: grid;
+		grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+		gap: 56px;
+		align-items: start;
+		margin-bottom: 48px;
+	}
+	@media (max-width: 860px) {
+		.mods-split {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+	}
+	.lede {
+		max-width: 60ch;
+		color: var(--muted);
+	}
+	.big-number {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		margin-top: 32px;
+	}
+	.big-number strong {
+		font-size: clamp(44px, 6vw, 64px);
+		font-weight: 600;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		color: var(--accent);
+		font-variant-numeric: tabular-nums;
+	}
+	.big-number span {
+		color: var(--muted);
+		font-size: 15px;
 	}
 	.mods {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-		gap: 16px;
-		margin: 0 0 48px;
+		margin: 0;
 		padding: 0;
 		list-style: none;
+		display: grid;
+		gap: 6px;
 	}
 	.mods a {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
-		height: 100%;
-		padding: 20px;
-		border: 1px solid var(--line);
+		gap: 8px;
+		padding: 18px 20px;
 		border-radius: var(--radius);
-		background: var(--surface);
 		text-decoration: none;
-		transition:
-			border-color 0.15s,
-			box-shadow 0.15s;
+		transition: background 0.2s var(--ease-out);
 	}
 	.mods a:hover {
-		border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-		box-shadow: var(--shadow);
+		background: var(--surface);
 	}
 	.mod-top {
 		display: flex;
@@ -570,9 +736,11 @@
 		gap: 12px;
 	}
 	.mod-title {
-		font: 600 19px/1.2 var(--font-display);
+		font-size: 19px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
 	}
-	.year {
+	.mod-year {
 		font: 12px/1 var(--font-mono);
 		color: var(--muted);
 	}
@@ -583,77 +751,93 @@
 	.mod-stats {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 4px 16px;
+		align-items: center;
+		gap: 4px 18px;
 		font-size: 14px;
 		color: var(--muted);
 	}
 	.mod-stats strong {
 		color: var(--text);
-		font-family: var(--font-display);
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
 	}
 	.mod-link {
 		display: inline-flex;
 		align-items: center;
-		gap: 6px;
-		margin-top: auto;
-		padding-top: 4px;
-		font-size: 14px;
-		font-weight: 600;
+		gap: 4px;
+		margin-left: auto;
+		font-weight: 500;
 		color: var(--accent);
 	}
 	.mod-link :global(svg) {
-		width: 14px;
-		height: 14px;
+		width: 15px;
+		height: 15px;
 	}
-	.gallery-title {
-		font-size: 20px;
-		margin: 0 0 16px;
-	}
+
 	.gallery {
 		display: grid;
-		gap: 16px;
-		margin-bottom: 40px;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 12px;
 	}
-	.gallery:last-child {
-		margin-bottom: 0;
+	.gallery .wide {
+		grid-column: span 2;
 	}
-	.gallery.game {
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+	@media (max-width: 860px) {
+		.gallery {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
-	.gallery.cad {
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+	@media (max-width: 480px) {
+		.gallery {
+			grid-template-columns: 1fr;
+		}
+		.gallery .wide {
+			grid-column: auto;
+		}
+		.wide :global(img) {
+			aspect-ratio: 16 / 10;
+		}
 	}
 	figure {
 		margin: 0;
-		border: 1px solid var(--line);
 		border-radius: var(--radius);
 		overflow: hidden;
 		background: var(--surface);
+		border: 1px solid var(--line);
 	}
 	/* Renders have light or transparent backgrounds, so they sit on a fixed light "paper" in both themes. */
 	figure :global(img) {
 		width: 100%;
-		aspect-ratio: 16 / 9;
+		aspect-ratio: 16 / 10;
 		object-fit: cover;
-		background: #efede7;
+		background: #ececee;
 	}
-	.cad figure :global(img) {
+	/* Twice as wide at the same height as a single cell. */
+	.wide :global(img) {
+		aspect-ratio: 32 / 10;
+	}
+	.cad :global(img) {
 		object-fit: contain;
-		padding: 10px;
+		padding: 8px;
 	}
 	figcaption {
-		padding: 12px 14px;
-		font-size: 14px;
+		padding: 10px 14px;
+		font-size: 13px;
 		color: var(--muted);
 	}
 
 	/* Contact */
 	.contact h2 {
-		font-size: clamp(30px, 5vw, 48px);
+		font-size: clamp(32px, 5.5vw, 56px);
+		letter-spacing: -0.035em;
 		margin-bottom: 18px;
-		max-width: 20ch;
+		max-width: 18ch;
 	}
-	.contact .lede {
-		margin: 0;
+	.contact .lede a {
+		color: var(--text);
+		text-underline-offset: 3px;
+	}
+	.contact .lede a:hover {
+		color: var(--accent);
 	}
 </style>
