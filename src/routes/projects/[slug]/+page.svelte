@@ -17,14 +17,14 @@
 </svelte:head>
 
 <article class="wrap page">
-	<a class="back" href="/#projects"><span aria-hidden="true">←</span> All projects</a>
+	<a class="back" href="/#projects"><Icon name="back" /> All projects</a>
 
 	<header>
 		<div class="meta">
 			{#if p.award}<span class="badge award"><Icon name="trophy" />{p.award}</span>{/if}
 			{#if p.context}<span class="badge">{p.context}</span>{/if}
 			{#if p.status}<span class="badge status">{p.status}</span>{/if}
-			<span class="mono">{p.year} · {p.categories.map((c) => categoryLabels[c]).join(' · ')}</span>
+			<span class="mono">{p.year}, {p.categories.map((c) => categoryLabels[c]).join(', ')}</span>
 		</div>
 		<h1>{p.title}</h1>
 		<p class="tagline">{p.tagline}</p>
@@ -86,6 +86,7 @@
 	}
 	.back {
 		display: inline-flex;
+		align-items: center;
 		gap: 6px;
 		font-size: 14px;
 		font-weight: 600;
@@ -94,6 +95,10 @@
 	}
 	.back:hover {
 		color: var(--accent);
+	}
+	.back :global(svg) {
+		width: 16px;
+		height: 16px;
 	}
 	header {
 		margin: 32px 0 40px;
@@ -111,8 +116,8 @@
 		gap: 6px;
 		font-size: 12px;
 		font-weight: 600;
-		padding: 4px 10px;
-		border-radius: 999px;
+		padding: 5px 10px;
+		border-radius: 6px;
 		background: var(--surface-2);
 		color: var(--muted);
 	}

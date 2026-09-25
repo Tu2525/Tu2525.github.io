@@ -157,18 +157,21 @@ export const education = {
 	degree: 'B.Sc. Intelligent Systems Engineering',
 	school: 'Helwan National University',
 	place: 'Helwan, Egypt',
-	years: '2022 – 2027 (expected)'
+	years: '2022 - 2027 (expected)'
 };
 
-export const certifications = [
-	'Generative AI Track, Digital Egypt Pioneers Initiative (2025–26)',
-	'Mobile Development Track (Flutter & Kotlin), Digital Egypt Pioneers Initiative (2024–25)',
-	'AWS Cloud Practitioner',
-	'Huawei HCIP-AI',
-	'Huawei ICT Associate, AI & Cloud',
-	'Machine Learning Specialization, Stanford',
-	'NLP, National Telecommunication Institute',
-	'React Native Bootcamp, ITI'
+export const certifications: { name: string; issuer: string }[] = [
+	{ name: 'Generative AI Track', issuer: 'Digital Egypt Pioneers Initiative, 2025-26' },
+	{
+		name: 'Mobile Development Track (Flutter & Kotlin)',
+		issuer: 'Digital Egypt Pioneers Initiative, 2024-25'
+	},
+	{ name: 'AWS Cloud Practitioner', issuer: 'Amazon Web Services' },
+	{ name: 'HCIP-AI', issuer: 'Huawei' },
+	{ name: 'ICT Associate, AI & Cloud', issuer: 'Huawei' },
+	{ name: 'Machine Learning Specialization', issuer: 'Stanford, Coursera' },
+	{ name: 'Natural Language Processing', issuer: 'National Telecommunication Institute' },
+	{ name: 'React Native Bootcamp', issuer: 'ITI' }
 ];
 
 // Unturned mods on the Steam Workshop, made with the Normedian modding team.

@@ -52,6 +52,14 @@
 	.options::-webkit-scrollbar {
 		display: none;
 	}
+	/* On narrow screens the list scrolls sideways; fade the right edge so that is visible. */
+	@media (max-width: 640px) {
+		.options {
+			-webkit-mask-image: linear-gradient(to right, #000 82%, transparent);
+			mask-image: linear-gradient(to right, #000 82%, transparent);
+			padding-right: 28px;
+		}
+	}
 	button {
 		flex: none;
 		min-height: 36px;
