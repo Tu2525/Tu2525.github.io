@@ -29,7 +29,7 @@ export const tracks: Track[] = [
 		summary:
 			'Software engineer finishing a B.Sc. in Intelligent Systems Engineering, with backend, mobile, and applied-ML experience across six internships and two hackathon-placing projects (1st and 2nd) spanning on-device ML for a wearable, an AI mentor app, and a serverless Gemini app. Seeking a junior/graduate role, remote or sponsorship-eligible.',
 		cv: '/cv/Tarek_Darwish_CV.pdf',
-		featured: ['atlas', 'healthica', 'fraud-detection', 'roast-master', 'zeroclip'],
+		featured: ['atlas', 'healthica', 'fraud-detection', 'roast-master', 'opencrosshair'],
 		skillOrder: ['Languages', 'Frameworks', 'Cloud & DevOps', 'Data & ML']
 	},
 	{
@@ -90,11 +90,11 @@ export const tracks: Track[] = [
 			'Software engineer finishing a B.Sc. in Intelligent Systems Engineering, with a self-directed Rust systems project alongside backend/AI internship work. Comfortable close to the OS: Rust, C++, Linux, Docker. Looking for a junior/graduate engineering role, fully remote, open to any country.',
 		cv: '/cv/Tarek_Darwish_CV_Systems.pdf',
 		featured: [
+			'opencrosshair',
 			'zeroclip',
 			'sdn-load-balancer',
 			'logistics-optimizer',
-			'berghain-solver',
-			'risk-ai'
+			'berghain-solver'
 		],
 		skillOrder: ['Languages', 'Cloud & DevOps', 'Frameworks', 'Data & ML']
 	}

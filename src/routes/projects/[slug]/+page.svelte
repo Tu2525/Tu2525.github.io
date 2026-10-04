@@ -88,7 +88,7 @@
 				{/if}
 				{#if p.demo}
 					<a class="btn" href={p.demo} target="_blank" rel="noopener"
-						><Icon name="external" />Live demo</a
+						><Icon name="external" />{p.demoLabel ?? 'Live demo'}</a
 					>
 				{/if}
 			</div>

@@ -37,7 +37,7 @@
 			{/if}
 			{#if project.demo}
 				<a class="code" href={project.demo} target="_blank" rel="noopener">
-					<Icon name="external" />Live demo
+					<Icon name="external" />{project.demoLabel ?? 'Live demo'}
 				</a>
 			{/if}
 		</div>

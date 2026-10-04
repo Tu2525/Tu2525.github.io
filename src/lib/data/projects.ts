@@ -30,6 +30,8 @@ export interface Project {
 	team?: string;
 	code: { status: CodeStatus; url?: string; label?: string };
 	demo?: string;
+	/** Button text for `demo`, defaults to "Live demo". */
+	demoLabel?: string;
 	/** Long-form sections for /projects/[slug]. */
 	detail?: { heading: string; body: string[] }[];
 }
@@ -181,6 +183,46 @@ export const projects: Project[] = [
 				heading: 'Structure',
 				body: [
 					'A Cargo workspace of small crates: zc-core (time, packets, DVR buffer, watchdog), zc-engine, zc-mux, zc-video, zc-audio, zc-input and zc-win. Platform code plugs into a platform-free core, which keeps the hard logic unit-testable.'
+				]
+			}
+		]
+	},
+	{
+		slug: 'opencrosshair',
+		title: 'OpenCrosshair',
+		tagline: 'A lightweight, open-source crosshair overlay for Windows games',
+		year: 2026,
+		categories: ['systems'],
+		status: 'Released, v0.3.0',
+		stack: ['Rust', 'Win32 API', 'egui', 'WinHTTP', 'GitHub Actions'],
+		summary:
+			'Draws a custom crosshair in a transparent, click-through window over any game, without touching the game process. One 7 MB exe that idles at a few MB of RAM in the tray.',
+		highlights: [
+			'Zero idle cost: redraws only on change, and focus events arrive through SetWinEventHook, so nothing polls',
+			'Per-game presets, a 64×64 pixel canvas, custom images, and hide or swap while aiming',
+			'Self-updates from GitHub releases over WinHTTP, swapping the running exe once you leave your game'
+		],
+		code: { status: 'public', url: 'https://github.com/Tu2525/OpenCrosshair' },
+		demo: 'https://github.com/Tu2525/OpenCrosshair/releases/latest',
+		demoLabel: 'Download',
+		detail: [
+			{
+				heading: 'No injection',
+				body: [
+					'Everything runs in its own process: no DLLs, no hooks into the game, no memory reading. When an anti-cheat refuses even a limited process handle, it falls back to a Toolhelp snapshot to find the focused game.'
+				]
+			},
+			{
+				heading: 'Rendering',
+				body: [
+					'Crosshairs are drawn into premultiplied BGRA buffers and pushed with UpdateLayeredWindow. Shapes write coverage into fill and outline masks using max instead of blending, so overlaps never double-darken. The circle is anti-aliased from its distance field.'
+				]
+			},
+			{
+				heading: 'One binary, three roles',
+				body: [
+					'The same exe is the app, the installer and the uninstaller. It installs per user with no admin rights, creates its Start menu shortcut through COM, and keeps a single instance with a named mutex and window messages.',
+					'GitHub Actions builds the releases and refuses to publish when the git tag and the Cargo.toml version disagree, so installs can never loop on the same update.'
 				]
 			}
 		]
