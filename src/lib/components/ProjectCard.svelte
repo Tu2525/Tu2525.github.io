@@ -1,9 +1,11 @@
 <script lang="ts">
 	import type { Project } from '$lib/data/projects';
+	import github from '$lib/data/github.json';
 	import Icon from './Icon.svelte';
 
 	// `lead` renders the first featured project across the full grid width, text beside highlights.
 	let { project, lead = false }: { project: Project; lead?: boolean } = $props();
+	const status = $derived((github as Record<string, { version?: string }>)[project.slug]?.version ?? project.status);
 	const href = $derived(`/projects/${project.slug}`);
 </script>
 
@@ -15,8 +17,8 @@
 			{:else if project.context}
 				<span class="badge">{project.context}</span>
 			{/if}
-			{#if project.status}
-				<span class="badge status">{project.status}</span>
+			{#if status}
+				<span class="badge status">{status}</span>
 			{/if}
 			<span class="year">{project.year}</span>
 		</div>

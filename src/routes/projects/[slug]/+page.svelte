@@ -208,6 +208,34 @@
 	.readme :global(img) {
 		max-width: 100%;
 		height: auto;
+		margin: 8px 0 20px;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+	}
+	.readme :global(h2),
+	.readme :global(h3) {
+		margin: 36px 0 12px;
+		letter-spacing: -0.02em;
+	}
+	.readme :global(h2) {
+		font-size: 22px;
+	}
+	.readme :global(h3) {
+		font-size: 18px;
+	}
+	.readme :global(p),
+	.readme :global(li) {
+		color: var(--muted);
+	}
+	.readme :global(p),
+	.readme :global(pre) {
+		margin-bottom: 14px;
+	}
+	.readme :global(li) {
+		margin-bottom: 6px;
+	}
+	.readme :global(strong) {
+		color: var(--text);
 	}
 	.readme :global(pre) {
 		overflow-x: auto;
