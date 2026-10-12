@@ -88,6 +88,7 @@ html:focus-within {
 }
 
 body {
+	-webkit-tap-highlight-color: transparent;
 	margin: 0;
 	background: var(--bg);
 	color: var(--text);

@@ -81,10 +81,13 @@
 			box-shadow 0.25s var(--ease-out),
 			transform 0.25s var(--ease-out);
 	}
-	.card:hover {
-		border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
-		box-shadow: var(--shadow);
-		transform: translateY(-2px);
+	/* Hover lift only where hover exists; on touch it would stick after a tap. */
+	@media (hover: hover) and (pointer: fine) {
+		.card:hover {
+			border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+			box-shadow: var(--shadow);
+			transform: translateY(-2px);
+		}
 	}
 	.main,
 	.detail {

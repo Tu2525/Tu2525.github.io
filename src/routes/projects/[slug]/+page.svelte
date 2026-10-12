@@ -193,10 +193,12 @@
 	}
 	@media (max-width: 860px) {
 		.layout {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 	.body {
+		min-width: 0;
+		overflow-wrap: anywhere;
 		max-width: 68ch;
 	}
 	.body h2 {

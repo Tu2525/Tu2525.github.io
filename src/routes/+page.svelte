@@ -626,6 +626,38 @@
 		.index {
 			grid-template-columns: 1fr;
 		}
+		.index li + li {
+			border-top: 1px solid var(--line);
+			border-radius: 0;
+		}
+		/* One swipeable row of filters instead of a wrapped pile. */
+		.filters {
+			flex-wrap: nowrap;
+			overflow-x: auto;
+			scrollbar-width: none;
+			margin-inline: calc(var(--gutter) * -1);
+			padding-inline: var(--gutter);
+			width: calc(100% + var(--gutter) * 2);
+		}
+		.filters button {
+			flex: none;
+		}
+	}
+	/* Touch: instant press feedback (no waiting on release), 44px targets. */
+	@media (pointer: coarse) {
+		.filters button {
+			min-height: 44px;
+		}
+		.index li:active,
+		.pushes a:active,
+		.mods a:active {
+			background: var(--surface-2);
+		}
+		.icon-link.small {
+			width: 44px;
+			height: 44px;
+			margin-block: -10px;
+		}
 	}
 
 	/* Experience: dates beside roles, separated by space rather than rules */
