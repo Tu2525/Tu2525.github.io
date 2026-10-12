@@ -4,6 +4,7 @@
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import CvButton from '$lib/components/CvButton.svelte';
 	import EmailButton from '$lib/components/EmailButton.svelte';
+	import Listening from '$lib/components/Listening.svelte';
 	import TrackSwitcher from '$lib/components/TrackSwitcher.svelte';
 	import { projects, categoryLabels, type Category } from '$lib/data/projects';
 	import { profile, experience, skills, education, certifications, mods } from '$lib/data/profile';
@@ -128,6 +129,7 @@
 					</li>
 				{/each}
 			</ul>
+			<Listening />
 		</aside>
 	</div>
 </section>

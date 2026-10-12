@@ -6,25 +6,6 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { profile } from '$lib/data/profile';
 	import { homeHref } from '$lib/track.svelte';
-	import { onMount } from 'svelte';
-
-	// Last.fm scrobbles Spotify; the key is read-only and public by design. On any failure the line just doesn't render.
-	let songs = $state<{ label: string; text: string; url: string }[]>([]);
-	onMount(async () => {
-		try {
-			const r = await fetch(
-				'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=tikatika_&limit=2&format=json&api_key=68fdf1b5b1227835a8e97fa449950377'
-			);
-			const tracks = (await r.json()).recenttracks.track;
-			// While playing, the first entry is the live one and the second is the last finished track.
-			songs = tracks.map((t: any, i: number) => ({
-				label: i === 0 && t['@attr']?.nowplaying === 'true' ? 'now playing' : 'last played',
-				text: `${t.name} · ${t.artist['#text']}`,
-				url: t.url
-			}));
-			if (songs[0]?.label === 'last played') songs = songs.slice(0, 1);
-		} catch {}
-	});
 
 	let { children } = $props();
 
@@ -114,13 +95,6 @@
 <footer class="foot">
 	<div class="wrap foot-row">
 		<p>© {new Date().getFullYear()} {profile.name}</p>
-		{#if songs.length}
-			<div class="songs">
-				{#each songs as song (song.url)}
-					<a href={song.url} target="_blank" rel="noopener">{song.label}: {song.text}</a>
-				{/each}
-			</div>
-		{/if}
 		<div class="foot-links">
 			<a href={profile.github} rel="me"><Icon name="github" label="GitHub" /></a>
 			<a href={profile.linkedin} rel="me"><Icon name="linkedin" label="LinkedIn" /></a>
@@ -286,21 +260,6 @@
 		justify-content: space-between;
 		gap: 16px;
 		flex-wrap: wrap;
-	}
-	.songs {
-		flex: 1;
-		min-width: 0;
-		display: grid;
-		font: 12px/1.6 var(--font-mono);
-	}
-	.songs a {
-		text-decoration: none;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	.songs a:hover {
-		color: var(--accent);
 	}
 	.foot-links {
 		display: flex;
