@@ -119,7 +119,7 @@ export const projects: Project[] = [
 			'SHAP TreeExplainer attributions, top three features narrated by Gemini',
 			'Svelte frontend with CSV upload and sample loaders; Dockerised and deployed to Hugging Face Spaces'
 		],
-		code: { status: 'soon', url: 'https://github.com/Tu2525/DEPIGrad' },
+		code: { status: 'public', url: 'https://github.com/Tu2525/DEPIGrad' },
 		detail: [
 			{
 				heading: 'Pipeline',
@@ -146,6 +146,25 @@ export const projects: Project[] = [
 			'SvelteKit UI on Pages, API on a Worker. Nothing to run or pay for when idle'
 		],
 		code: { status: 'public', url: 'https://github.com/Tu2525/cf_ai_TheRoastMaster' }
+	},
+	{
+		slug: 'nutqai',
+		title: 'NutqAI',
+		tagline: 'Egyptian Arabic speech practice for kids, scored at the phoneme level',
+		year: 2026,
+		categories: ['mobile', 'ai'],
+		context: 'Graduation project, Helwan National University',
+		status: 'In progress',
+		stack: ['Flutter', 'Python', 'FastAPI', 'ONNX', 'Docker'],
+		summary:
+			'A practice app for children in speech therapy and kids who default to English. Speech is aligned and scored per phoneme against Egyptian Arabic targets, and a backend tracks plans, progress and doctor reports.',
+		highlights: [
+			'Python speech package with an aligner, scoring, a quality gate and training with ONNX export',
+			'Shared phoneme, lexicon and score contracts that every service reads from',
+			'FastAPI backend for accounts, consent, doctor links, practice plans and reports, deployed with Docker Compose'
+		],
+		team: 'Team project',
+		code: { status: 'soon', url: 'https://github.com/Tu2525/natqai' }
 	},
 	{
 		slug: 'zeroclip',
@@ -193,7 +212,7 @@ export const projects: Project[] = [
 		tagline: 'A lightweight, open-source crosshair overlay for Windows games',
 		year: 2026,
 		categories: ['systems'],
-		status: 'Released, v0.3.0',
+		status: 'Released',
 		stack: ['Rust', 'Win32 API', 'egui', 'WinHTTP', 'GitHub Actions'],
 		summary:
 			'Draws a custom crosshair in a transparent, click-through window over any game, without touching the game process. One 7 MB exe that idles at a few MB of RAM in the tray.',
@@ -329,6 +348,45 @@ export const projects: Project[] = [
 			'One script launches the whole environment; Docker image included'
 		],
 		code: { status: 'soon', url: 'https://github.com/Tu2525/sdn-load-balancer' }
+	},
+	{
+		slug: 'link-ecommerce',
+		title: 'Link E-commerce',
+		tagline: 'Bilingual Flutter shop with Firebase auth, orders and push notifications',
+		year: 2025,
+		categories: ['mobile'],
+		context: 'Link Development internship',
+		stack: ['Flutter', 'Riverpod', 'Firebase', 'Firestore', 'FCM', 'Clean Architecture'],
+		summary:
+			'A cross-platform e-commerce app built during the Link Development cross-platform internship: browse and wishlist products, check out, and follow orders, in English or Arabic.',
+		highlights: [
+			'Email and Facebook sign-in on Firebase Auth, with Firestore-backed orders and wishlist',
+			'Orders feature split into data, domain and presentation layers with Riverpod providers',
+			'English and Arabic localisation, light and dark themes, push notifications'
+		],
+		team: 'Intern team, led by me',
+		code: { status: 'public', url: 'https://github.com/Tu2525/LinkFlutterEcommerceApp' }
+	},
+	{
+		slug: 'skeleton-scan',
+		title: 'Skeleton Scan Concierge',
+		tagline: 'Joint range-of-motion capture that ends in a clinician-ready PDF',
+		year: 2025,
+		categories: ['ai'],
+		stack: ['Python', 'MediaPipe', 'OpenCV', 'Gemini', 'PDF reports'],
+		summary:
+			'A command-line intake assistant. It measures joint range of motion from a webcam with MediaPipe, asks follow-up questions through the Gemini API, and builds a PDF report for a clinician.',
+		highlights: [
+			'MediaPipe pose analysis per joint, advanced by a keypress when the patient finishes the movement',
+			'Gemini follow-up questions about the patient's responses',
+			'One PDF report per patient'
+		],
+		team: 'Team project',
+		code: {
+			status: 'public',
+			url: 'https://github.com/devAhmedMustafa/Limitless-Labs-AI',
+			label: 'Team repo'
+		}
 	},
 	{
 		slug: 'yourgympal',

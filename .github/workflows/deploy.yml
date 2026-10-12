@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *' # rebuild so READMEs and release versions stay fresh
 
 permissions:
   contents: read
@@ -28,6 +30,8 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -4,9 +4,11 @@
 	import { categoryLabels } from '$lib/data/projects';
 	import { profile } from '$lib/data/profile';
 	import { homeHref } from '$lib/track.svelte';
+	import github from '$lib/data/github.json';
 
 	let { data } = $props();
 	const p = $derived(data.project);
+	const gh = $derived((github as Record<string, { readme?: string; version?: string }>)[p.slug]);
 
 	// Coming from the home page, "All projects" behaves like the browser back button,
 	// so the visitor lands where they left off. Otherwise it links to the projects section.
@@ -39,7 +41,8 @@
 		<div class="meta">
 			{#if p.award}<span class="badge award"><Icon name="trophy" />{p.award}</span>{/if}
 			{#if p.context}<span class="badge">{p.context}</span>{/if}
-			{#if p.status}<span class="badge status">{p.status}</span>{/if}
+			{#if gh?.version}<span class="badge status">{gh.version}</span>
+			{:else if p.status}<span class="badge status">{p.status}</span>{/if}
 			<span class="mono">{p.year}, {p.categories.map((c) => categoryLabels[c]).join(', ')}</span>
 		</div>
 		<h1>{p.title}</h1>
@@ -48,17 +51,22 @@
 
 	<div class="layout">
 		<div class="body">
-			<p class="summary">{p.summary}</p>
+				{#if gh?.readme}
+					<!-- README of the repo, fetched at build time by scripts/sync-github.mjs -->
+					<div class="readme">{@html gh.readme}</div>
+				{:else}
+					<p class="summary">{p.summary}</p>
 
-			<h2>Highlights</h2>
-			<ul class="highlights">
-				{#each p.highlights as h}<li>{h}</li>{/each}
-			</ul>
+					<h2>Highlights</h2>
+					<ul class="highlights">
+						{#each p.highlights as h}<li>{h}</li>{/each}
+					</ul>
 
-			{#each p.detail ?? [] as section}
-				<h2>{section.heading}</h2>
-				{#each section.body as para}<p>{para}</p>{/each}
-			{/each}
+					{#each p.detail ?? [] as section}
+						<h2>{section.heading}</h2>
+						{#each section.body as para}<p>{para}</p>{/each}
+					{/each}
+				{/if}
 		</div>
 
 		<aside>
@@ -195,6 +203,43 @@
 	}
 	.highlights li::marker {
 		color: var(--accent);
+	}
+
+	.readme :global(img) {
+		max-width: 100%;
+		height: auto;
+	}
+	.readme :global(pre) {
+		overflow-x: auto;
+		padding: 14px;
+		border-radius: var(--radius);
+		background: var(--surface-2);
+		font: 13px/1.5 var(--font-mono);
+	}
+	.readme :global(code) {
+		font-family: var(--font-mono);
+	}
+	.readme :global(a) {
+		color: var(--accent);
+	}
+	.readme :global(.anchor) {
+		display: none;
+	}
+	.readme :global(ul),
+	.readme :global(ol) {
+		padding-left: 20px;
+		margin-bottom: 14px;
+	}
+	.readme :global(table) {
+		display: block;
+		overflow-x: auto;
+		border-collapse: collapse;
+		margin-bottom: 14px;
+	}
+	.readme :global(th),
+	.readme :global(td) {
+		padding: 6px 10px;
+		border: 1px solid var(--line);
 	}
 
 	aside {
