@@ -30,7 +30,14 @@ for (const [, slug, repo] of found) {
 			.replace(/ id="user-content-/g, ' id="');
 		const rel = await get(`${repo}/releases/latest`);
 		const version = rel.ok ? (await rel.json()).tag_name : undefined;
-		data[slug] = { readme: stub ? undefined : html, version };
+		const meta = await (await get(repo)).json();
+		data[slug] = {
+			readme: stub ? undefined : html,
+			version,
+			stars: meta.stargazers_count,
+			language: meta.language ?? undefined,
+			pushed: meta.pushed_at?.slice(0, 10)
+		};
 		console.log(`ok   ${slug}${version ? ' ' + version : ''}${stub ? ' (stub readme ignored)' : ''}`);
 	} catch (e) {
 		console.log(`keep ${slug}: ${e.message}`);

@@ -8,6 +8,7 @@
 	import GithubLogo from 'phosphor-svelte/lib/GithubLogo';
 	import LinkedinLogo from 'phosphor-svelte/lib/LinkedinLogo';
 	import LockSimple from 'phosphor-svelte/lib/LockSimple';
+	import MagnifyingGlass from 'phosphor-svelte/lib/MagnifyingGlass';
 	import Moon from 'phosphor-svelte/lib/Moon';
 	import Sun from 'phosphor-svelte/lib/Sun';
 	import Trophy from 'phosphor-svelte/lib/Trophy';
@@ -21,6 +22,7 @@
 		github: GithubLogo,
 		linkedin: LinkedinLogo,
 		lock: LockSimple,
+		search: MagnifyingGlass,
 		moon: Moon,
 		sun: Sun,
 		trophy: Trophy

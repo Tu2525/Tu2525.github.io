@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { Project } from '$lib/data/projects';
-	import github from '$lib/data/github.json';
+	import { repoInfo, shortDate } from '$lib/data/repo';
 	import Icon from './Icon.svelte';
 
 	// `lead` renders the first featured project across the full grid width, text beside highlights.
 	let { project, lead = false }: { project: Project; lead?: boolean } = $props();
-	const status = $derived((github as Record<string, { version?: string }>)[project.slug]?.version ?? project.status);
+	const repo = $derived(repoInfo(project.slug));
+	const status = $derived(repo?.version ?? project.status);
 	const href = $derived(`/projects/${project.slug}`);
 </script>
 
@@ -25,6 +26,13 @@
 
 		<h3><a {href}>{project.title}</a></h3>
 		<p class="tagline">{project.tagline}</p>
+		{#if repo?.pushed}
+			<p class="repo" aria-label="Repository stats">
+				{#if repo.language}<span>{repo.language}</span>{/if}
+				{#if repo.stars}<span>{repo.stars} stars</span>{/if}
+				<span>pushed {shortDate(repo.pushed)}</span>
+			</p>
+		{/if}
 
 		{#if lead}
 			<p class="summary">{project.summary}</p>
@@ -160,6 +168,14 @@
 	.tagline {
 		color: var(--muted);
 		max-width: 52ch;
+	}
+	.repo {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 14px;
+		font: 12px/1.4 var(--font-mono);
+		color: var(--muted);
+		margin-top: -6px;
 	}
 	.summary {
 		max-width: 56ch;

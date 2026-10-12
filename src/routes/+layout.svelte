@@ -1,12 +1,15 @@
 <script lang="ts">
 	import '$lib/styles/global.css';
 	import { page } from '$app/state';
+	import CommandPalette from '$lib/components/CommandPalette.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { profile } from '$lib/data/profile';
 	import { homeHref } from '$lib/track.svelte';
 
 	let { children } = $props();
+
+	let palette = $state<ReturnType<typeof CommandPalette>>();
 
 	const isHome = $derived(page.url.pathname === '/');
 
@@ -76,9 +79,14 @@
 				>
 			{/each}
 		</nav>
+		<button class="find" type="button" onclick={() => palette?.show()} aria-label="Open command palette">
+			<Icon name="search" /><span>Search</span><kbd>Ctrl K</kbd>
+		</button>
 		<ThemeToggle />
 	</div>
 </header>
+
+<CommandPalette bind:this={palette} />
 
 <main id="main">
 	{@render children()}
@@ -198,6 +206,45 @@
 		}
 		nav a {
 			padding: 8px;
+		}
+	}
+
+	.find {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		min-height: 36px;
+		padding: 0 8px 0 12px;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: var(--surface);
+		color: var(--muted);
+		font: 500 13px var(--font-sans);
+		cursor: pointer;
+		transition: border-color 0.2s var(--ease-out);
+	}
+	.find:hover {
+		border-color: var(--text);
+	}
+	.find :global(svg) {
+		width: 15px;
+		height: 15px;
+	}
+	.find kbd {
+		font: 11px/1 var(--font-mono);
+		padding: 4px 6px;
+		border-radius: 999px;
+		background: var(--surface-2);
+	}
+	@media (max-width: 860px) {
+		.find span,
+		.find kbd {
+			display: none;
+		}
+		.find {
+			width: 36px;
+			padding: 0;
+			justify-content: center;
 		}
 	}
 

@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
-	import { categoryLabels } from '$lib/data/projects';
+	import { categoryLabels, projects } from '$lib/data/projects';
 	import { profile } from '$lib/data/profile';
 	import { homeHref } from '$lib/track.svelte';
-	import github from '$lib/data/github.json';
+	import { repoInfo, shortDate } from '$lib/data/repo';
 
 	let { data } = $props();
 	const p = $derived(data.project);
-	const gh = $derived((github as Record<string, { readme?: string; version?: string }>)[p.slug]);
+	const gh = $derived(repoInfo(p.slug));
+	const i = $derived(projects.findIndex((x) => x.slug === p.slug));
+	const prev = $derived(projects[(i - 1 + projects.length) % projects.length]);
+	const next = $derived(projects[(i + 1) % projects.length]);
 
 	// Coming from the home page, "All projects" behaves like the browser back button,
 	// so the visitor lands where they left off. Otherwise it links to the projects section.
@@ -45,6 +48,7 @@
 			{:else if p.status}<span class="badge status">{p.status}</span>{/if}
 			<span class="mono">{p.year}, {p.categories.map((c) => categoryLabels[c]).join(', ')}</span>
 		</div>
+		<p class="path" aria-hidden="true">~/projects/{p.slug}</p>
 		<h1>{p.title}</h1>
 		<p class="tagline">{p.tagline}</p>
 	</header>
@@ -53,6 +57,11 @@
 		<div class="body">
 				{#if gh?.readme}
 					<!-- README of the repo, fetched at build time by scripts/sync-github.mjs -->
+					<div class="file">
+						<span class="fname">README.md</span>
+						{#if gh.pushed}<span>updated {shortDate(gh.pushed)}</span>{/if}
+						{#if p.code.url}<a href={p.code.url} target="_blank" rel="noopener">view on GitHub</a>{/if}
+					</div>
 					<div class="readme">{@html gh.readme}</div>
 				{:else}
 					<p class="summary">{p.summary}</p>
@@ -102,6 +111,11 @@
 			</div>
 		</aside>
 	</div>
+
+	<nav class="pager" aria-label="More projects">
+		<a href="/projects/{prev.slug}"><span>Previous</span>{prev.title}</a>
+		<a href="/projects/{next.slug}"><span>Next</span>{next.title}</a>
+	</nav>
 </article>
 
 <style>
@@ -205,6 +219,65 @@
 		color: var(--accent);
 	}
 
+	.path {
+		margin-bottom: 10px;
+		font: 13px/1 var(--font-mono);
+		color: var(--muted);
+	}
+	.file {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 6px 16px;
+		padding: 10px 14px;
+		margin-bottom: 20px;
+		border: 1px solid var(--line);
+		border-radius: var(--radius-sm);
+		background: var(--surface);
+		font: 12px/1.4 var(--font-mono);
+		color: var(--muted);
+	}
+	.fname {
+		color: var(--text);
+		font-weight: 600;
+		margin-right: auto;
+	}
+	.file a {
+		color: var(--accent);
+	}
+	.pager {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 12px;
+		margin-top: 72px;
+	}
+	.pager a {
+		display: grid;
+		gap: 4px;
+		padding: 16px 18px;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: var(--surface);
+		text-decoration: none;
+		font-weight: 600;
+		transition: border-color 0.2s var(--ease-out);
+	}
+	.pager a:last-child {
+		text-align: right;
+	}
+	.pager a:hover {
+		border-color: var(--accent);
+	}
+	.pager span {
+		font: 12px/1 var(--font-mono);
+		color: var(--muted);
+		font-weight: 400;
+	}
+	@media (max-width: 560px) {
+		.pager {
+			grid-template-columns: 1fr;
+		}
+	}
 	.readme :global(img) {
 		max-width: 100%;
 		height: auto;
