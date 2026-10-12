@@ -204,8 +204,11 @@
 		.brand-name {
 			display: none;
 		}
+		.bar {
+			gap: 6px;
+		}
 		nav a {
-			padding: 8px;
+			padding: 8px 6px;
 		}
 	}
 

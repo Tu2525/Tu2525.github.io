@@ -355,6 +355,7 @@
 	}
 	.hero-grid {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 40px;
 		align-items: end;
 	}
