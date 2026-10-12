@@ -5,7 +5,7 @@
 	let songs = $state<{ label: string; text: string; url: string }[]>([]);
 	const live = $derived(songs[0]?.label === 'now playing');
 
-	onMount(async () => {
+	async function load() {
 		try {
 			const r = await fetch(
 				'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=tikatika_&limit=2&format=json&api_key=68fdf1b5b1227835a8e97fa449950377'
@@ -20,6 +20,17 @@
 			}));
 			if (songs[0]?.label === 'last played') songs = songs.slice(0, 1);
 		} catch {}
+	}
+
+	onMount(() => {
+		load();
+		const timer = setInterval(() => !document.hidden && load(), 30_000);
+		const onVisible = () => !document.hidden && load();
+		document.addEventListener('visibilitychange', onVisible);
+		return () => {
+			clearInterval(timer);
+			document.removeEventListener('visibilitychange', onVisible);
+		};
 	});
 </script>
 
@@ -27,7 +38,7 @@
 	<div class="listening" aria-label="Listening on Spotify">
 		<span class="bars" class:live aria-hidden="true"><i></i><i></i><i></i></span>
 		<ul>
-			{#each songs as s (s.url)}
+			{#each songs as s (s.label)}
 				<li>
 					<a href={s.url} target="_blank" rel="noopener">
 						<span class="label">{s.label}</span>
