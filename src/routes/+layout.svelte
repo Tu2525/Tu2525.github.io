@@ -9,18 +9,20 @@
 	import { onMount } from 'svelte';
 
 	// Last.fm scrobbles Spotify; the key is read-only and public by design. On any failure the line just doesn't render.
-	let song = $state<{ text: string; url: string; live: boolean }>();
+	let songs = $state<{ label: string; text: string; url: string }[]>([]);
 	onMount(async () => {
 		try {
 			const r = await fetch(
-				'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=tikatika_&limit=1&format=json&api_key=68fdf1b5b1227835a8e97fa449950377'
+				'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=tikatika_&limit=2&format=json&api_key=68fdf1b5b1227835a8e97fa449950377'
 			);
-			const t = (await r.json()).recenttracks.track[0];
-			song = {
+			const tracks = (await r.json()).recenttracks.track;
+			// While playing, the first entry is the live one and the second is the last finished track.
+			songs = tracks.map((t: any, i: number) => ({
+				label: i === 0 && t['@attr']?.nowplaying === 'true' ? 'now playing' : 'last played',
 				text: `${t.name} · ${t.artist['#text']}`,
-				url: t.url,
-				live: t['@attr']?.nowplaying === 'true'
-			};
+				url: t.url
+			}));
+			if (songs[0]?.label === 'last played') songs = songs.slice(0, 1);
 		} catch {}
 	});
 
@@ -112,10 +114,12 @@
 <footer class="foot">
 	<div class="wrap foot-row">
 		<p>© {new Date().getFullYear()} {profile.name}</p>
-		{#if song}
-			<a class="song" href={song.url} target="_blank" rel="noopener">
-				{song.live ? 'now playing' : 'last played'}: {song.text}
-			</a>
+		{#if songs.length}
+			<div class="songs">
+				{#each songs as song (song.url)}
+					<a href={song.url} target="_blank" rel="noopener">{song.label}: {song.text}</a>
+				{/each}
+			</div>
 		{/if}
 		<div class="foot-links">
 			<a href={profile.github} rel="me"><Icon name="github" label="GitHub" /></a>
@@ -283,16 +287,19 @@
 		gap: 16px;
 		flex-wrap: wrap;
 	}
-	.song {
+	.songs {
 		flex: 1;
 		min-width: 0;
-		font: 12px/1.4 var(--font-mono);
+		display: grid;
+		font: 12px/1.6 var(--font-mono);
+	}
+	.songs a {
 		text-decoration: none;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	.song:hover {
+	.songs a:hover {
 		color: var(--accent);
 	}
 	.foot-links {
