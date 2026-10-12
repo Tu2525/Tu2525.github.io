@@ -24,8 +24,7 @@ for (const [, slug, repo] of found) {
 		// Default `flutter create` / template READMEs say nothing; keep the hand-written copy instead.
 		const stub = /A new Flutter project|Getting Started with Create React App/.test(html);
 		html = html
-			.replace(/<a [^>]*class="anchor"[\s\S]*?<\/a>/g, '')
-			.replace(/<div class="markdown-heading"[^>]*><h1[\s\S]*?<\/h1><\/div>/, '') // page has its own h1
+			.replace(/<div class="markdown-heading"[^>]*><h1[\s\S]*?<\/a><\/div>/, '') // page has its own h1
 			.replace(/(src|srcset)="(?!https?:|data:|\/\/|#)\/?([^"]+)"/g, `$1="${raw}$2"`)
 			.replace(/href="(?!https?:|mailto:|\/\/|#)\/?([^"]+)"/g, `href="https://github.com/${repo}/blob/HEAD/$1"`)
 			.replace(/ id="user-content-/g, ' id="');

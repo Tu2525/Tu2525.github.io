@@ -15,7 +15,8 @@ export default defineConfig({
 
 			// Fully static output for GitHub Pages (user site, served from the domain root).
 			adapter: adapter({ fallback: '404.html', strict: true }),
-			prerender: { handleHttpError: 'fail' }
+			// README HTML is external, so a dead in-page #link there must not fail the build.
+			prerender: { handleHttpError: 'fail', handleMissingId: 'ignore' }
 		})
 	]
 });
