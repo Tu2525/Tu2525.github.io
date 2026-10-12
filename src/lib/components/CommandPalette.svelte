@@ -37,6 +37,11 @@
 		{ label: 'Copy email', hint: profile.email, run: () => navigator.clipboard?.writeText(profile.email) }
 	]);
 
+	// Keep the highlighted row visible when arrowing past the edge of the list.
+	$effect(() => {
+		document.getElementById(`cmd-${sel}`)?.scrollIntoView({ block: 'nearest' });
+	});
+
 	const shown = $derived(
 		all.filter((c) => (c.label + ' ' + c.hint).toLowerCase().includes(query.trim().toLowerCase()))
 	);
