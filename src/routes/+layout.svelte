@@ -6,6 +6,23 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { profile } from '$lib/data/profile';
 	import { homeHref } from '$lib/track.svelte';
+	import { onMount } from 'svelte';
+
+	// Last.fm scrobbles Spotify; the key is read-only and public by design. On any failure the line just doesn't render.
+	let song = $state<{ text: string; url: string; live: boolean }>();
+	onMount(async () => {
+		try {
+			const r = await fetch(
+				'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=tikatika_&limit=1&format=json&api_key=68fdf1b5b1227835a8e97fa449950377'
+			);
+			const t = (await r.json()).recenttracks.track[0];
+			song = {
+				text: `${t.name} · ${t.artist['#text']}`,
+				url: t.url,
+				live: t['@attr']?.nowplaying === 'true'
+			};
+		} catch {}
+	});
 
 	let { children } = $props();
 
@@ -95,6 +112,11 @@
 <footer class="foot">
 	<div class="wrap foot-row">
 		<p>© {new Date().getFullYear()} {profile.name}</p>
+		{#if song}
+			<a class="song" href={song.url} target="_blank" rel="noopener">
+				{song.live ? 'now playing' : 'last played'}: {song.text}
+			</a>
+		{/if}
 		<div class="foot-links">
 			<a href={profile.github} rel="me"><Icon name="github" label="GitHub" /></a>
 			<a href={profile.linkedin} rel="me"><Icon name="linkedin" label="LinkedIn" /></a>
@@ -260,6 +282,18 @@
 		justify-content: space-between;
 		gap: 16px;
 		flex-wrap: wrap;
+	}
+	.song {
+		flex: 1;
+		min-width: 0;
+		font: 12px/1.4 var(--font-mono);
+		text-decoration: none;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.song:hover {
+		color: var(--accent);
 	}
 	.foot-links {
 		display: flex;
