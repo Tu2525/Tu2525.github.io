@@ -8,6 +8,7 @@
 	import { projects, categoryLabels, type Category } from '$lib/data/projects';
 	import { profile, experience, skills, education, certifications, mods } from '$lib/data/profile';
 	import { tracks } from '$lib/data/tracks';
+	import { repoInfo, shortDate } from '$lib/data/repo';
 	import { readTrackFromUrl, currentTrack } from '$lib/track.svelte';
 
 	import keyedPlateIso from '$lib/assets/gallery/keyed-plate-iso.png?enhanced';
@@ -31,6 +32,13 @@
 	const shown = $derived(
 		filter === 'all' ? others : others.filter((p) => p.categories.includes(filter as Category))
 	);
+
+	// Real repo activity from the build-time GitHub sync, newest push first.
+	const recent = projects
+		.map((p) => ({ p, r: repoInfo(p.slug) }))
+		.filter((x) => x.r?.pushed)
+		.sort((a, b) => b.r!.pushed!.localeCompare(a.r!.pushed!))
+		.slice(0, 5);
 
 	const orderedSkills = $derived(track.skillOrder.map((g) => [g, skills[g]] as const));
 
@@ -80,27 +88,47 @@
 
 <!-- Hero -->
 <section class="hero">
-	<div class="wrap">
-		<p class="eyebrow rise" style="--i: 0">{profile.location} · Open to remote and relocation</p>
-		<h1 class="rise" style="--i: 1">{profile.name}</h1>
-		<p class="headline rise" style="--i: 2">{track.headline}</p>
-		<p class="pitch rise" style="--i: 3">{track.pitch}</p>
+	<div class="wrap hero-grid">
+		<div>
+			<p class="eyebrow rise" style="--i: 0">{profile.location} · Open to remote and relocation</p>
+			<h1 class="rise" style="--i: 1">{profile.name}</h1>
+			<p class="headline rise" style="--i: 2">{track.headline}</p>
+			<p class="pitch rise" style="--i: 3">{track.pitch}</p>
 
-		<div class="cta rise" style="--i: 4">
-			<CvButton primary />
-			<EmailButton />
-			<span class="socials">
-				<a class="icon-link" href={profile.github} rel="me"><Icon name="github" label="GitHub" /></a
-				>
-				<a class="icon-link" href={profile.linkedin} rel="me">
-					<Icon name="linkedin" label="LinkedIn" />
-				</a>
-			</span>
+			<div class="cta rise" style="--i: 4">
+				<CvButton primary />
+				<EmailButton />
+				<span class="socials">
+					<a class="icon-link" href={profile.github} rel="me"
+						><Icon name="github" label="GitHub" /></a
+					>
+					<a class="icon-link" href={profile.linkedin} rel="me">
+						<Icon name="linkedin" label="LinkedIn" />
+					</a>
+				</span>
+			</div>
+
+			<div class="rise" style="--i: 5">
+				<TrackSwitcher />
+			</div>
 		</div>
 
-		<div class="rise" style="--i: 5">
-			<TrackSwitcher />
-		</div>
+		<aside class="pushes rise" style="--i: 4" aria-label="Recent repository activity">
+			<p class="pushes-head"><span>recently pushed</span><span>from GitHub</span></p>
+			<ul>
+				{#each recent as { p, r } (p.slug)}
+					<li>
+						<a href="/projects/{p.slug}">
+							<span class="push-name">{p.title}</span>
+							<span class="push-meta">
+								<span>{r?.version ?? r?.language}</span>
+								<time datetime={r?.pushed}>{shortDate(r!.pushed!)}</time>
+							</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</aside>
 	</div>
 </section>
 
@@ -119,7 +147,8 @@
 <!-- Projects -->
 <section class="section" id="projects">
 	<div class="wrap">
-		<h2 class="section-title">Selected work</h2>
+		<p class="eyebrow">01 / Work</p>
+			<h2 class="section-title">Selected work</h2>
 		<div class="featured">
 			{#each featured as p, i (p.slug)}
 				<ProjectCard project={p} lead={i === 0} />
@@ -168,7 +197,8 @@
 <!-- Experience -->
 <section class="section" id="experience">
 	<div class="wrap">
-		<h2 class="section-title">Experience</h2>
+		<p class="eyebrow">02 / Experience</p>
+			<h2 class="section-title">Experience</h2>
 		<ol class="timeline">
 			{#each experience as r (r.title + r.org)}
 				<li class="reveal">
@@ -201,7 +231,8 @@
 <!-- Skills & education -->
 <section class="section" id="skills">
 	<div class="wrap split">
-		<div>
+		<p class="eyebrow">03 / Stack</p>
+			<div>
 			<h2 class="section-title">Skills</h2>
 			<dl class="skills">
 				{#each orderedSkills as [group, items] (group)}
@@ -237,7 +268,8 @@
 <!-- 3D modelling -->
 <section class="section" id="modelling">
 	<div class="wrap">
-		<div class="mods-split">
+		<p class="eyebrow">04 / Off the keyboard</p>
+			<div class="mods-split">
 			<div class="mods-intro">
 				<h2 class="section-title">3D modelling and game mods</h2>
 				<p class="lede">
@@ -301,6 +333,82 @@
 </section>
 
 <style>
+	/* Hero: blueprint grid fading out behind the text, plus a panel of real repo activity */
+	.hero {
+		position: relative;
+		isolation: isolate;
+	}
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background:
+			radial-gradient(60% 70% at 85% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+			linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 48px 48px,
+			linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 48px 48px;
+		-webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
+		mask-image: linear-gradient(to bottom, #000 30%, transparent);
+		opacity: 0.7;
+	}
+	.hero-grid {
+		display: grid;
+		gap: 40px;
+		align-items: end;
+	}
+	@media (min-width: 960px) {
+		.hero-grid {
+			grid-template-columns: minmax(0, 1fr) 320px;
+			gap: 56px;
+		}
+	}
+	.pushes {
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: color-mix(in srgb, var(--surface) 88%, transparent);
+		-webkit-backdrop-filter: blur(8px);
+		backdrop-filter: blur(8px);
+		box-shadow: var(--shadow);
+		font-family: var(--font-mono);
+		font-size: 12px;
+	}
+	.pushes-head {
+		display: flex;
+		justify-content: space-between;
+		padding: 12px 16px;
+		border-bottom: 1px solid var(--line);
+		color: var(--muted);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	.pushes ul {
+		margin: 0;
+		padding: 6px;
+		list-style: none;
+	}
+	.pushes a {
+		display: grid;
+		gap: 2px;
+		padding: 10px;
+		border-radius: var(--radius-sm);
+		text-decoration: none;
+		transition: background 0.2s var(--ease-out);
+	}
+	.pushes a:hover {
+		background: var(--surface-2);
+	}
+	.push-name {
+		font: 600 14px/1.3 var(--font-sans);
+	}
+	.pushes a:hover .push-name {
+		color: var(--accent);
+	}
+	.push-meta {
+		display: flex;
+		justify-content: space-between;
+		color: var(--muted);
+	}
+
 	/* Hero */
 	.hero {
 		padding-block: clamp(56px, 9vw, 96px) clamp(40px, 6vw, 64px);
