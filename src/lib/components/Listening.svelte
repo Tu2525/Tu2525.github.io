@@ -10,7 +10,8 @@
 			const r = await fetch(
 				'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=tikatika_&limit=2&format=json&api_key=68fdf1b5b1227835a8e97fa449950377'
 			);
-			const tracks = (await r.json()).recenttracks.track;
+			// Last.fm adds the live track on top of `limit`, so cap to the two lines shown.
+			const tracks = (await r.json()).recenttracks.track.slice(0, 2);
 			// While playing, the first entry is the live one and the second is the last finished track.
 			songs = tracks.map((t: any, i: number) => ({
 				label: i === 0 && t['@attr']?.nowplaying === 'true' ? 'now playing' : 'last played',
