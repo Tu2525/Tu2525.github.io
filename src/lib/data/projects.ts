@@ -97,6 +97,12 @@ export const projects: Project[] = [
 				]
 			},
 			{
+				heading: 'Doctor dashboard',
+				body: [
+					"A companion web dashboard (React, TypeScript, Vite on Cloudflare) lets a doctor sign in with an email code, watch patient alerts, and open a patient's history. It has a separate admin view."
+				]
+			},
+			{
 				heading: 'Model',
 				body: [
 					'Trained on the GlucoBench and PhysioCGM datasets. Linear, polynomial and small neural models were compared across several prediction horizons and exported as float and quantised .tflite files.'
@@ -378,7 +384,7 @@ export const projects: Project[] = [
 			'A command-line intake assistant. It measures joint range of motion from a webcam with MediaPipe, asks follow-up questions through the Gemini API, and builds a PDF report for a clinician.',
 		highlights: [
 			'MediaPipe pose analysis per joint, advanced by a keypress when the patient finishes the movement',
-			'Gemini follow-up questions about the patient's responses',
+			"Gemini follow-up questions about the patient's responses",
 			'One PDF report per patient'
 		],
 		team: 'Team project',
