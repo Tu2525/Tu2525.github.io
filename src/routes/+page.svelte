@@ -149,7 +149,6 @@
 <!-- Projects -->
 <section class="section" id="projects">
 	<div class="wrap">
-		<p class="eyebrow">01 / Work</p>
 			<h2 class="section-title">Selected work</h2>
 		<div class="featured">
 			{#each featured as p, i (p.slug)}
@@ -199,7 +198,6 @@
 <!-- Experience -->
 <section class="section" id="experience">
 	<div class="wrap">
-		<p class="eyebrow">02 / Experience</p>
 			<h2 class="section-title">Experience</h2>
 		<ol class="timeline">
 			{#each experience as r (r.title + r.org)}
@@ -233,7 +231,6 @@
 <!-- Skills & education -->
 <section class="section" id="skills">
 	<div class="wrap split">
-		<p class="eyebrow">03 / Stack</p>
 			<div>
 			<h2 class="section-title">Skills</h2>
 			<dl class="skills">
@@ -270,10 +267,9 @@
 <!-- 3D modelling -->
 <section class="section" id="modelling">
 	<div class="wrap">
-		<p class="eyebrow">04 / Off the keyboard</p>
 			<div class="mods-split">
 			<div class="mods-intro">
-				<h2 class="section-title">3D modelling and game mods</h2>
+				<h2 class="section-title">3D modelling and CAD</h2>
 				<p class="lede">
 					Before software, I made low-poly models for Unturned mods on the Steam Workshop with the
 					Normedian modding team. Now I also model woodworking parts and jigs in Blender and
@@ -346,12 +342,11 @@
 		inset: 0;
 		z-index: -1;
 		background:
-			radial-gradient(60% 70% at 85% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
 			linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 48px 48px,
 			linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 48px 48px;
 		-webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
 		mask-image: linear-gradient(to bottom, #000 30%, transparent);
-		opacity: 0.7;
+		opacity: 0.4;
 	}
 	.hero-grid {
 		display: grid;
@@ -373,7 +368,7 @@
 		backdrop-filter: blur(8px);
 		box-shadow: var(--shadow);
 		font-family: var(--font-mono);
-		font-size: 12px;
+		font-size: var(--fs-micro);
 	}
 	.pushes-head {
 		display: flex;
@@ -382,7 +377,7 @@
 		border-bottom: 1px solid var(--line);
 		color: var(--muted);
 		text-transform: uppercase;
-		letter-spacing: 0.08em;
+		letter-spacing: 0.04em;
 	}
 	.pushes ul {
 		margin: 0;
@@ -401,7 +396,7 @@
 		background: var(--surface-2);
 	}
 	.push-name {
-		font: 600 14px/1.3 var(--font-sans);
+		font: 600 var(--fs-small)/1.3 var(--font-sans);
 	}
 	.pushes a:hover .push-name {
 		color: var(--accent);
@@ -420,14 +415,14 @@
 		margin-bottom: 18px;
 	}
 	h1 {
-		font-size: clamp(42px, 7vw, 72px);
+		font-size: var(--fs-display);
 		font-weight: 600;
 		letter-spacing: -0.04em;
 		line-height: 1.02;
 	}
 	.headline {
 		margin-top: 16px;
-		font-size: clamp(19px, 2.4vw, 24px);
+		font-size: var(--fs-lead);
 		font-weight: 500;
 		letter-spacing: -0.01em;
 		color: var(--accent);
@@ -435,8 +430,7 @@
 	.pitch {
 		margin-top: 14px;
 		max-width: 56ch;
-		font-size: 18px;
-		color: var(--muted);
+		font-size: var(--fs-lead);
 	}
 	.cta {
 		display: flex;
@@ -495,14 +489,14 @@
 	.stats dd {
 		order: -1;
 		margin: 0;
-		font-size: clamp(30px, 4vw, 40px);
+		font-size: var(--fs-title);
 		font-weight: 600;
 		letter-spacing: -0.03em;
 		line-height: 1;
 		font-variant-numeric: tabular-nums;
 	}
 	.stats dt {
-		font-size: 14px;
+		font-size: var(--fs-small);
 		color: var(--muted);
 		max-width: 20ch;
 	}
@@ -535,7 +529,7 @@
 		margin: 72px 0 12px;
 	}
 	.more-head h3 {
-		font-size: 22px;
+		font-size: var(--fs-lead);
 	}
 	.filters {
 		display: flex;
@@ -549,7 +543,7 @@
 		border-radius: 999px;
 		background: transparent;
 		color: var(--muted);
-		font: 500 14px/1 var(--font-sans);
+		font: 500 var(--fs-small)/1 var(--font-sans);
 		cursor: pointer;
 		transition:
 			color 0.2s var(--ease-out),
@@ -598,21 +592,21 @@
 	}
 	.index-title {
 		font-weight: 600;
-		font-size: 17px;
+		font-size: var(--fs-body);
 	}
 	.index-main:hover .index-title {
 		color: var(--accent);
 	}
 	.index-tagline {
-		color: var(--muted);
-		font-size: 15px;
+		color: var(--text);
+		font-size: var(--fs-body);
 	}
 	.index-meta {
 		display: flex;
 		align-items: center;
 		gap: 8px;
 		flex: none;
-		font: 12px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		color: var(--muted);
 	}
 	.index-year {
@@ -678,18 +672,18 @@
 		flex-direction: column;
 		gap: 6px;
 		padding-top: 3px;
-		font: 13px/1.4 var(--font-mono);
+		font: var(--fs-micro)/1.4 var(--font-mono);
 		color: var(--muted);
 		font-variant-numeric: tabular-nums;
 	}
 	.place {
-		font-size: 12px;
+		font-size: var(--fs-micro);
 	}
 	.what {
 		max-width: 68ch;
 	}
 	.what h3 {
-		font-size: 20px;
+		font-size: var(--fs-lead);
 	}
 	.org {
 		margin-top: 2px;
@@ -701,7 +695,7 @@
 		padding-left: 18px;
 		display: grid;
 		gap: 6px;
-		color: var(--muted);
+		color: var(--text);
 	}
 	.what ul li::marker {
 		color: var(--line);
@@ -711,7 +705,7 @@
 		align-items: center;
 		gap: 6px;
 		margin-top: 12px;
-		font-size: 14px;
+		font-size: var(--fs-small);
 		font-weight: 500;
 		color: var(--accent);
 		text-decoration: none;
@@ -726,7 +720,7 @@
 		gap: 10px;
 		margin-top: 48px;
 		color: var(--muted);
-		font-size: 14px;
+		font-size: var(--fs-small);
 	}
 	.note :global(svg) {
 		width: 16px;
@@ -780,14 +774,14 @@
 		gap: 4px;
 	}
 	.edu h3 {
-		font-size: 19px;
+		font-size: var(--fs-lead);
 	}
 	.muted {
 		color: var(--muted);
-		font-size: 14px;
+		font-size: var(--fs-small);
 	}
 	.sub {
-		font-size: 17px;
+		font-size: var(--fs-body);
 		margin: 32px 0 14px;
 	}
 	.certs {
@@ -805,10 +799,10 @@
 	}
 	.cert-name {
 		font-weight: 500;
-		font-size: 15px;
+		font-size: var(--fs-body);
 	}
 	.cert-issuer {
-		font-size: 13px;
+		font-size: var(--fs-micro);
 		color: var(--muted);
 	}
 	@media (max-width: 480px) {
@@ -833,7 +827,6 @@
 	}
 	.lede {
 		max-width: 60ch;
-		color: var(--muted);
 	}
 	.big-number {
 		display: flex;
@@ -842,7 +835,7 @@
 		margin-top: 32px;
 	}
 	.big-number strong {
-		font-size: clamp(44px, 6vw, 64px);
+		font-size: var(--fs-display);
 		font-weight: 600;
 		letter-spacing: -0.04em;
 		line-height: 1;
@@ -851,7 +844,7 @@
 	}
 	.big-number span {
 		color: var(--muted);
-		font-size: 15px;
+		font-size: var(--fs-body);
 	}
 	.mods {
 		margin: 0;
@@ -879,24 +872,24 @@
 		gap: 12px;
 	}
 	.mod-title {
-		font-size: 19px;
+		font-size: var(--fs-lead);
 		font-weight: 600;
 		letter-spacing: -0.01em;
 	}
 	.mod-year {
-		font: 12px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		color: var(--muted);
 	}
 	.mod-summary {
-		color: var(--muted);
-		font-size: 15px;
+		color: var(--text);
+		font-size: var(--fs-body);
 	}
 	.mod-stats {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 4px 18px;
-		font-size: 14px;
+		font-size: var(--fs-small);
 		color: var(--muted);
 	}
 	.mod-stats strong {
@@ -965,13 +958,13 @@
 	}
 	figcaption {
 		padding: 10px 14px;
-		font-size: 13px;
+		font-size: var(--fs-micro);
 		color: var(--muted);
 	}
 
 	/* Contact */
 	.contact h2 {
-		font-size: clamp(32px, 5.5vw, 56px);
+		font-size: var(--fs-title);
 		letter-spacing: -0.035em;
 		margin-bottom: 18px;
 		max-width: 18ch;

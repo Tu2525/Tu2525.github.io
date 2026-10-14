@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$lib/styles/global.css';
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import CommandPalette from '$lib/components/CommandPalette.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
@@ -11,6 +12,12 @@
 
 	let palette = $state<ReturnType<typeof CommandPalette>>();
 
+	// Prerendered as Ctrl; swapped on Apple devices after mount so non-Apple users see no flash.
+	let mod = $state('Ctrl');
+	onMount(() => {
+		if (/Mac|iPhone|iPad/.test(navigator.userAgent)) mod = '⌘';
+	});
+
 	const isHome = $derived(page.url.pathname === '/');
 
 	// `wide` items only show on larger screens so the bar fits on one line on phones.
@@ -18,7 +25,7 @@
 		{ id: 'projects', label: 'Projects', wide: false },
 		{ id: 'experience', label: 'Experience', wide: false },
 		{ id: 'skills', label: 'Skills', wide: true },
-		{ id: 'modelling', label: '3D', wide: true },
+		{ id: 'modelling', label: '3D and CAD', wide: true },
 		{ id: 'contact', label: 'Contact', wide: false }
 	];
 
@@ -80,7 +87,7 @@
 			{/each}
 		</nav>
 		<button class="find" type="button" onclick={() => palette?.show()} aria-label="Open command palette">
-			<Icon name="search" /><span>Search</span><kbd>Ctrl K</kbd>
+			<Icon name="search" /><span>Search</span><kbd>{mod} K</kbd>
 		</button>
 		<ThemeToggle />
 	</div>
@@ -152,7 +159,7 @@
 		border-radius: 9px;
 		background: var(--accent);
 		color: var(--on-accent);
-		font: 700 13px/1 var(--font-mono);
+		font: 700 var(--fs-micro)/1 var(--font-sans);
 	}
 	nav {
 		display: flex;
@@ -162,7 +169,7 @@
 		padding: 8px 12px;
 		border-radius: 999px;
 		text-decoration: none;
-		font-size: 14px;
+		font-size: var(--fs-small);
 		font-weight: 500;
 		color: var(--muted);
 	}
@@ -222,9 +229,14 @@
 		border-radius: 999px;
 		background: var(--surface);
 		color: var(--muted);
-		font: 500 13px var(--font-sans);
+		font: 500 var(--fs-micro) var(--font-sans);
 		cursor: pointer;
 		transition: border-color 0.2s var(--ease-out);
+	}
+	@media (pointer: coarse) {
+		.find {
+			min-height: 44px;
+		}
 	}
 	.find:hover {
 		border-color: var(--text);
@@ -234,7 +246,7 @@
 		height: 15px;
 	}
 	.find kbd {
-		font: 11px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		padding: 4px 6px;
 		border-radius: 999px;
 		background: var(--surface-2);
@@ -255,7 +267,7 @@
 		border-top: 1px solid var(--line);
 		padding-block: 28px;
 		color: var(--muted);
-		font-size: 14px;
+		font-size: var(--fs-small);
 	}
 	.foot-row {
 		display: flex;

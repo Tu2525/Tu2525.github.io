@@ -27,7 +27,7 @@
 		margin-left: 2px;
 		padding: 3px 8px;
 		border-radius: 999px;
-		font-size: 12px;
+		font-size: var(--fs-micro);
 		font-weight: 500;
 		background: color-mix(in srgb, currentColor 14%, transparent);
 	}

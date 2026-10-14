@@ -39,7 +39,7 @@
 		{/if}
 
 		<div class="actions">
-			<a class="more" {href}>Read more <Icon name="arrow" /></a>
+			<a class="more" {href}>View project <Icon name="arrow" /></a>
 			{#if project.code.status === 'public' && project.code.url}
 				<a class="code" href={project.code.url} target="_blank" rel="noopener">
 					<Icon name="github" />{project.code.label ?? 'Code'}
@@ -112,7 +112,7 @@
 			padding: 36px;
 		}
 		.lead h3 {
-			font-size: 34px;
+			font-size: var(--fs-title);
 		}
 		.lead .detail {
 			justify-content: center;
@@ -133,7 +133,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
-		font-size: 12px;
+		font-size: var(--fs-micro);
 		font-weight: 500;
 		padding: 5px 10px;
 		border-radius: 6px;
@@ -154,13 +154,13 @@
 	}
 	.year {
 		margin-left: auto;
-		font: 12px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		color: var(--muted);
 		font-variant-numeric: tabular-nums;
 	}
 
 	h3 {
-		font-size: 24px;
+		font-size: var(--fs-lead);
 	}
 	h3 a {
 		text-decoration: none;
@@ -169,14 +169,14 @@
 		color: var(--accent);
 	}
 	.tagline {
-		color: var(--muted);
+		color: var(--text);
 		max-width: 52ch;
 	}
 	.repo {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 4px 14px;
-		font: 12px/1.4 var(--font-mono);
+		font: var(--fs-micro)/1.4 var(--font-mono);
 		color: var(--muted);
 		margin-top: -6px;
 	}
@@ -190,7 +190,7 @@
 		list-style: none;
 		display: grid;
 		gap: 10px;
-		font-size: 15px;
+		font-size: var(--fs-body);
 	}
 	.highlights li {
 		position: relative;
@@ -220,7 +220,7 @@
 		align-items: center;
 		gap: 18px;
 		flex-wrap: wrap;
-		font-size: 14px;
+		font-size: var(--fs-small);
 		font-weight: 500;
 	}
 	/* Regular cards flatten their two groups so the actions row sits last and lines up across the grid. */

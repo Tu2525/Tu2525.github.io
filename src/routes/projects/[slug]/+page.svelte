@@ -126,7 +126,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
-		font-size: 14px;
+		font-size: var(--fs-small);
 		font-weight: 600;
 		color: var(--muted);
 		text-decoration: none;
@@ -152,7 +152,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
-		font-size: 12px;
+		font-size: var(--fs-micro);
 		font-weight: 600;
 		padding: 5px 10px;
 		border-radius: 6px;
@@ -172,17 +172,17 @@
 		height: 13px;
 	}
 	.mono {
-		font: 12px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		color: var(--muted);
 	}
 	h1 {
-		font-size: clamp(36px, 6vw, 60px);
+		font-size: var(--fs-title);
 		letter-spacing: -0.03em;
 	}
 	.tagline {
 		margin-top: 12px;
-		font-size: clamp(18px, 2.4vw, 22px);
-		color: var(--muted);
+		font-size: var(--fs-lead);
+		color: var(--text);
 	}
 
 	.layout {
@@ -202,14 +202,14 @@
 		max-width: 68ch;
 	}
 	.body h2 {
-		font-size: 22px;
+		font-size: var(--fs-lead);
 		margin: 36px 0 12px;
 	}
 	.body p {
 		margin-bottom: 14px;
 	}
 	.summary {
-		font-size: 18px;
+		font-size: var(--fs-lead);
 	}
 	.highlights {
 		padding-left: 18px;
@@ -223,7 +223,7 @@
 
 	.path {
 		margin-bottom: 10px;
-		font: 13px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		color: var(--muted);
 	}
 	.file {
@@ -236,7 +236,7 @@
 		border: 1px solid var(--line);
 		border-radius: var(--radius-sm);
 		background: var(--surface);
-		font: 12px/1.4 var(--font-mono);
+		font: var(--fs-micro)/1.4 var(--font-mono);
 		color: var(--muted);
 	}
 	.fname {
@@ -271,7 +271,7 @@
 		border-color: var(--accent);
 	}
 	.pager span {
-		font: 12px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		color: var(--muted);
 		font-weight: 400;
 	}
@@ -293,14 +293,14 @@
 		letter-spacing: -0.02em;
 	}
 	.readme :global(h2) {
-		font-size: 22px;
+		font-size: var(--fs-lead);
 	}
 	.readme :global(h3) {
-		font-size: 18px;
+		font-size: var(--fs-lead);
 	}
 	.readme :global(p),
 	.readme :global(li) {
-		color: var(--muted);
+		color: var(--text);
 	}
 	.readme :global(p),
 	.readme :global(pre) {
@@ -317,7 +317,7 @@
 		padding: 14px;
 		border-radius: var(--radius);
 		background: var(--surface-2);
-		font: 13px/1.5 var(--font-mono);
+		font: var(--fs-micro)/1.5 var(--font-mono);
 	}
 	.readme :global(code) {
 		font-family: var(--font-mono);
@@ -358,8 +358,8 @@
 		background: var(--surface);
 	}
 	.panel-title {
-		font: 600 12px/1 var(--font-mono);
-		letter-spacing: 0.06em;
+		font: 600 var(--fs-micro)/1 var(--font-mono);
+		letter-spacing: 0.04em;
 		text-transform: uppercase;
 		color: var(--muted);
 		margin-bottom: 12px;
@@ -384,7 +384,7 @@
 		align-items: center;
 		gap: 8px;
 		color: var(--muted);
-		font-size: 14px;
+		font-size: var(--fs-small);
 	}
 	.muted :global(svg) {
 		width: 15px;

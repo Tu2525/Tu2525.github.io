@@ -20,6 +20,6 @@
 		justify-items: start;
 	}
 	h1 {
-		font-size: clamp(32px, 5vw, 48px);
+		font-size: var(--fs-title);
 	}
 </style>

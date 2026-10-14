@@ -158,7 +158,7 @@
 		border: 0;
 		background: transparent;
 		color: inherit;
-		font: 16px var(--font-sans);
+		font: var(--fs-body) var(--font-sans);
 	}
 	input:focus-visible {
 		outline: none;
@@ -167,7 +167,7 @@
 		color: var(--muted);
 	}
 	kbd {
-		font: 11px/1 var(--font-mono);
+		font: var(--fs-micro)/1 var(--font-mono);
 		padding: 4px 6px;
 		border: 1px solid var(--line);
 		border-radius: 6px;
@@ -186,7 +186,7 @@
 		gap: 16px;
 		padding: 10px 12px;
 		border-radius: var(--radius-sm);
-		font-size: 15px;
+		font-size: var(--fs-body);
 		cursor: pointer;
 	}
 	li.on {
@@ -196,7 +196,7 @@
 		color: var(--accent);
 	}
 	.hint {
-		font: 12px/1.6 var(--font-mono);
+		font: var(--fs-micro)/1.6 var(--font-mono);
 		color: var(--muted);
 	}
 	.none {

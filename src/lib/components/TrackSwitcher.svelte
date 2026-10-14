@@ -32,9 +32,8 @@
 		flex-wrap: wrap;
 	}
 	.label {
-		font-family: var(--font-mono);
-		font-size: 12px;
-		letter-spacing: 0.06em;
+		font-size: var(--fs-micro);
+		letter-spacing: 0.04em;
 		text-transform: uppercase;
 		color: var(--muted);
 	}
@@ -68,7 +67,7 @@
 		border-radius: 999px;
 		background: transparent;
 		color: var(--muted);
-		font: 500 14px/1 var(--font-sans);
+		font: 500 var(--fs-small)/1 var(--font-sans);
 		cursor: pointer;
 		white-space: nowrap;
 	}

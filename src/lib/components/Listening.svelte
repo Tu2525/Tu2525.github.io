@@ -57,7 +57,7 @@
 		align-items: flex-start;
 		padding: 12px 16px;
 		border-top: 1px solid var(--line);
-		font: 12px/1.5 var(--font-mono);
+		font: var(--fs-micro)/1.5 var(--font-mono);
 		color: var(--muted);
 	}
 	ul {
