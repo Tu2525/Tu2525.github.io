@@ -22,3 +22,8 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# UI Review & Audit
+UI_REVIEW.md
+.taste-skill/
+
+
