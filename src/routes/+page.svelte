@@ -45,7 +45,7 @@
 
 	const stats = [
 		{ value: '1st', label: 'Leaders of Tomorrow hackathon' },
-		{ value: '1st', label: 'YLF 2026 hackathon' },
+		{ value: '1st', label: 'YLF Hackathon 2026' },
 		{ value: '8', label: 'roles since 2023' },
 		{ value: '15+', label: 'students taught ML and Flutter' }
 	];

@@ -148,7 +148,7 @@ export const projects: Project[] = [
 		tagline: 'Smart-band health monitor with on-device glucose prediction',
 		year: 2026,
 		categories: ['mobile', 'ai'],
-		award: '1st place · YLF 2026 (2nd · Banha)',
+		award: '1st · YLF Hackathon 2026, 2nd · Banha Hackathon 2025',
 		stack: ['Flutter', 'Riverpod', 'BLE', 'ESP32', 'TensorFlow Lite', 'Supabase'],
 		summary:
 			'A Flutter app that streams vitals from an ESP32 smart band over Bluetooth Low Energy and predicts blood glucose on the phone with TensorFlow Lite. No server sits in the real-time path.',
