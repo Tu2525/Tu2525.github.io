@@ -13,6 +13,7 @@ const data = existsSync(out) ? JSON.parse(readFileSync(out, 'utf8')) : {};
 const found = [...src.matchAll(/slug: '([^']+)'[\s\S]*?github\.com\/([\w.-]+\/[\w.-]+)'/g)];
 
 for (const [, slug, repo] of found) {
+	if (repo.startsWith('sonorahq/')) continue; // upstream README isn't mine
 	try {
 		const r = await get(`${repo}/readme`, 'application/vnd.github.html+json');
 		if (!r.ok) {

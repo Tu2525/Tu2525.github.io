@@ -38,6 +38,77 @@ export interface Project {
 
 export const projects: Project[] = [
 	{
+		slug: 'sonora',
+		title: 'Sonora',
+		tagline: 'Spotify Connect and Jams for a native Rust music client',
+		year: 2026,
+		categories: ['systems'],
+		context: 'Open source contribution',
+		status: '4 PRs merged',
+		stack: ['Rust', 'GPUI', 'librespot', 'Spotify Connect'],
+		summary:
+			"Four merged pull requests to Sonora, a native music streaming client built with Rust and GPUI (2k+ stars), plus an upstream fix in librespot that the Connect work depended on.",
+		highlights: [
+			'Sonora shows up as a Spotify Connect device: a phone can start, pause, skip, seek and set the volume, and Sonora can hand playback to and from other devices (+2.9k lines, #895)',
+			"Join, start and share Spotify Jams from the devices menu, with a QR code, participant list and a strip above the player bar (#934)",
+			"Likes made in Spotify's other apps update the heart right away (#905); autoplay now defaults to on (#935)",
+			'librespot fix: dealer messages carrying plain JSON were dropped as bad base64, which hid Liked Songs changes (#1786)'
+		],
+		team: 'Open source, maintained by sonorahq',
+		code: {
+			status: 'public',
+			url: 'https://github.com/sonorahq/sonora',
+			label: 'Sonora repo'
+		},
+		detail: [
+			{
+				heading: 'Connect',
+				body: [
+					"The feature sits behind a provider-neutral music::connect trait, so state and views never see Spotify directly, following the crate rules in the repo. It is off by default because Spotify may not allow third-party clients.",
+					'State updates to Spotify are spaced out and back off when it rate-limits them. Tested on Windows 11 against the Spotify phone app.'
+				]
+			},
+			{
+				heading: 'Jams',
+				body: [
+					'Joining reads a jam link from the clipboard and shows who is in it first. The host can remove people, leaving a jam you own ends it, and the strip stays current as people join and leave.'
+				]
+			}
+		]
+	},
+	{
+		slug: 'arne',
+		title: 'arne',
+		tagline: 'Claude Code plugin that routes each prompt to the cheapest model that can do it',
+		year: 2026,
+		categories: ['ai'],
+		stack: ['TypeScript', 'Claude Code plugin', 'Haiku', 'Sonnet', 'Opus'],
+		summary:
+			'arne (auto route and effort) sends every prompt to Haiku, Sonnet or Opus at a suitable effort, and prices staying, switching or handing off a large chat before you commit.',
+		highlights: [
+			'A small judge model picks tier and effort per prompt; in its bench it cost 53% less per task than Opus-only',
+			'A band above the prompt shows the choice and why, with pinning and per-decision cost logged locally',
+			'Cache-aware: compares the cost of staying, switching and a Haiku-written handoff summary'
+		],
+		code: { status: 'public', url: 'https://github.com/Tu2525/arne' }
+	},
+	{
+		slug: 'safi',
+		title: 'safi',
+		tagline: 'A small harness for running local models',
+		year: 2026,
+		categories: ['ai'],
+		stack: ['Python', 'PowerShell', 'Local LLMs'],
+		summary:
+			'A mini agent harness built task by task through reviewed pull requests: tool registry, onboarding probe, model profiles, trace logging and resumable runs.',
+		highlights: [
+			'Tool registry with a math tool, plus redaction, traces and resume support',
+			'Onboarding probe and a profile for a 27B model on Windows hardware',
+			'Developed through numbered plan tasks, each landing as its own PR'
+		],
+		code: { status: 'private' }
+	},
+	{
 		slug: 'atlas',
 		title: 'Atlas',
 		tagline: 'AI mentor that finds your tech track and plans how to learn it',
