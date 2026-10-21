@@ -29,7 +29,7 @@ export const tracks: Track[] = [
 		summary:
 			'Software engineer finishing a B.Sc. in Intelligent Systems Engineering, with backend, mobile, and applied-ML experience across six internships and two hackathon-placing projects (1st and 2nd) spanning on-device ML for a wearable, an AI mentor app, and a serverless Gemini app. Seeking a junior/graduate role, remote or sponsorship-eligible.',
 		cv: '/cv/Tarek_Darwish_CV.pdf',
-		featured: ['atlas', 'healthica', 'fraud-detection', 'roast-master', 'opencrosshair'],
+		featured: ['healthica', 'atlas', 'fraud-detection', 'sonora', 'roast-master'],
 		skillOrder: ['Languages', 'Frameworks', 'Cloud & DevOps', 'Data & ML']
 	},
 	{
@@ -53,7 +53,7 @@ export const tracks: Track[] = [
 		summary:
 			'Software engineer finishing a B.Sc. in Intelligent Systems Engineering, with applied ML spanning an explainable fraud-detection platform (SHAP attributions narrated by Gemini), a Gemini-Vision generative AI app, and a LLaMA-70B backend pipeline in production. Looking for a junior/graduate ML/AI role, fully remote or with relocation support.',
 		cv: '/cv/Tarek_Darwish_CV_ML_AI.pdf',
-		featured: ['fraud-detection', 'healthica', 'atlas', 'musebridge', 'image-captioning'],
+		featured: ['fraud-detection', 'healthica', 'atlas', 'arne', 'musebridge'],
 		skillOrder: ['Data & ML', 'Frameworks', 'Languages', 'Cloud & DevOps']
 	},
 	{
@@ -65,7 +65,7 @@ export const tracks: Track[] = [
 		summary:
 			'Software engineer finishing a B.Sc. in Intelligent Systems Engineering, with cross-platform and native mobile experience across four roles: led a Flutter e-commerce build at Link Development, shipped Kotlin and Flutter apps over 8 months at DEPI, and taught Flutter to 15+ students. Also builds AI backends, so mobile features that depend on models are familiar ground. Seeking a junior mobile role, remote or sponsorship-eligible.',
 		cv: '/cv/Tarek_Darwish_CV_Mobile.pdf',
-		featured: ['healthica', 'atlas', 'yourgympal', 'roast-master', 'fraud-detection'],
+		featured: ['healthica', 'atlas', 'link-ecommerce', 'nutqai', 'yourgympal'],
 		skillOrder: ['Frameworks', 'Languages', 'Cloud & DevOps', 'Data & ML']
 	},
 	{
@@ -89,13 +89,7 @@ export const tracks: Track[] = [
 		summary:
 			'Software engineer finishing a B.Sc. in Intelligent Systems Engineering, with a self-directed Rust systems project alongside backend/AI internship work. Comfortable close to the OS: Rust, C++, Linux, Docker. Looking for a junior/graduate engineering role, fully remote, open to any country.',
 		cv: '/cv/Tarek_Darwish_CV_Systems.pdf',
-		featured: [
-			'opencrosshair',
-			'zeroclip',
-			'sdn-load-balancer',
-			'logistics-optimizer',
-			'berghain-solver'
-		],
+		featured: ['sonora', 'opencrosshair', 'zeroclip', 'sdn-load-balancer', 'logistics-optimizer'],
 		skillOrder: ['Languages', 'Cloud & DevOps', 'Frameworks', 'Data & ML']
 	}
 ];
