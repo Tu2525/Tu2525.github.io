@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import AsciiWater from '$lib/components/AsciiWater.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import CvButton from '$lib/components/CvButton.svelte';
@@ -89,6 +90,7 @@
 
 <!-- Hero -->
 <section class="hero">
+	<AsciiWater />
 	<div class="wrap hero-grid">
 		<div>
 			<p class="eyebrow rise" style="--i: 0">{profile.location} · Open to remote and relocation</p>
