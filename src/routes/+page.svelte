@@ -138,7 +138,7 @@
 <div class="wrap">
 	<dl class="stats">
 		{#each stats as s (s.label)}
-			<div class="reveal">
+			<div>
 				<dt>{s.label}</dt>
 				<dd>{s.value}</dd>
 			</div>
@@ -168,7 +168,7 @@
 		</div>
 		<ul class="index">
 			{#each shown as p (p.slug)}
-				<li class="reveal">
+				<li>
 					<a class="index-main" href="/projects/{p.slug}">
 						<span class="index-title">{p.title}</span>
 						<span class="index-tagline">{p.tagline}</span>
@@ -201,7 +201,7 @@
 			<h2 class="section-title">Experience</h2>
 		<ol class="timeline">
 			{#each experience as r (r.title + r.org)}
-				<li class="reveal">
+				<li>
 					<div class="when">
 						<span>{r.start} - {r.end}</span>
 						<span class="place">{r.place}</span>
@@ -336,18 +336,6 @@
 		position: relative;
 		isolation: isolate;
 	}
-	.hero::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background:
-			linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 48px 48px,
-			linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 48px 48px;
-		-webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
-		mask-image: linear-gradient(to bottom, #000 30%, transparent);
-		opacity: 0.4;
-	}
 	.hero-grid {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
@@ -363,10 +351,7 @@
 	.pushes {
 		border: 1px solid var(--line);
 		border-radius: var(--radius);
-		background: color-mix(in srgb, var(--surface) 88%, transparent);
-		-webkit-backdrop-filter: blur(8px);
-		backdrop-filter: blur(8px);
-		box-shadow: var(--shadow);
+		background: var(--surface);
 		font-family: var(--font-mono);
 		font-size: var(--fs-micro);
 	}
@@ -376,8 +361,6 @@
 		padding: 12px 16px;
 		border-bottom: 1px solid var(--line);
 		color: var(--muted);
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
 	}
 	.pushes ul {
 		margin: 0;
@@ -687,7 +670,7 @@
 	}
 	.org {
 		margin-top: 2px;
-		color: var(--accent);
+		color: var(--text);
 		font-weight: 500;
 	}
 	.what ul {
@@ -707,7 +690,7 @@
 		margin-top: 12px;
 		font-size: var(--fs-small);
 		font-weight: 500;
-		color: var(--accent);
+		color: var(--text);
 		text-decoration: none;
 	}
 	.role-link :global(svg) {
@@ -903,7 +886,7 @@
 		gap: 4px;
 		margin-left: auto;
 		font-weight: 500;
-		color: var(--accent);
+		color: var(--text);
 	}
 	.mod-link :global(svg) {
 		width: 15px;
