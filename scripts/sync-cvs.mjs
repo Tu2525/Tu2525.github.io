@@ -15,7 +15,7 @@ const map = {
 	'ml and ai': 'Tarek_Darwish_CV_ML_AI.pdf',
 	'mobile app': 'Tarek_Darwish_CV_Mobile.pdf',
 	'frontend and js': 'Tarek_Darwish_CV_Frontend.pdf',
-	'systems and oss': 'Tarek_Darwish_CV_Systems.pdf' // newest: Tarek_Darwish_Systems_2027.pdf, copy it by hand
+	'systems and oss': 'Tarek_Darwish_CV_Systems.pdf' // newest: Tarek_Darwish_Systems_2027-11-01.pdf, copy it by hand
 };
 
 if (!existsSync(jobSearch)) {
