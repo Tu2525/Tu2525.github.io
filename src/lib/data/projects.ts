@@ -44,14 +44,16 @@ export const projects: Project[] = [
 		year: 2026,
 		categories: ['systems'],
 		context: 'Open source contribution',
-		status: '4 PRs merged',
+		status: '6 PRs merged',
 		stack: ['Rust', 'GPUI', 'librespot', 'Spotify Connect'],
 		summary:
-			"Four merged pull requests to Sonora, a native music streaming client built with Rust and GPUI (2k+ stars), plus an upstream fix in librespot that the Connect work depended on.",
+			"Six merged pull requests to Sonora, a native music streaming client built with Rust and GPUI (2.5k+ stars), plus a merged right-to-left text fix in its gpui fork and an upstream fix in librespot that the Connect work depended on.",
 		highlights: [
 			'Sonora shows up as a Spotify Connect device: a phone can start, pause, skip, seek and set the volume, and Sonora can hand playback to and from other devices (+2.9k lines, #895)',
 			"Join, start and share Spotify Jams from the devices menu, with a QR code, participant list and a strip above the player bar (#934)",
 			"Likes made in Spotify's other apps update the heart right away (#905); autoplay now defaults to on (#935)",
+			'Right-to-left text now renders, wraps and edits correctly, with a matching fix in the gpui fork (#880, sonorahq/gpui #18)',
+			"Jam follow-ups: leaving a jam keeps its queue, and the tray and taskbar follow the host's track and play state (#1170)",
 			'librespot fix: dealer messages carrying plain JSON were dropped as bad base64, which hid Liked Songs changes (#1786)'
 		],
 		team: 'Open source, maintained by sonorahq',

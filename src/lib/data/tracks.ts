@@ -25,7 +25,7 @@ export const tracks: Track[] = [
 		label: 'General',
 		headline: 'Software Engineer · Full-Stack, Backend & Applied ML',
 		pitch:
-			'Software engineer across backend, mobile and applied ML. Six internships, 1st and 2nd place hackathon projects, graduating 2027.',
+			'Software engineer across backend, mobile and applied ML. Six internships, 1st and 2nd place hackathon projects, graduating January 2027.',
 		summary:
 			'Software engineer finishing a B.Sc. in Intelligent Systems Engineering, with backend, mobile, and applied-ML experience across six internships and two hackathon-placing projects (1st and 2nd) spanning on-device ML for a wearable, an AI mentor app, and a serverless Gemini app. Seeking a junior/graduate role, remote or sponsorship-eligible.',
 		cv: '/cv/Tarek_Darwish_CV.pdf',

@@ -322,7 +322,7 @@
 	<div class="wrap contact">
 		<h2>Hiring for a junior or graduate role?</h2>
 		<p class="lede">
-			I'm open to remote roles anywhere, and to relocation with sponsorship. Email is the fastest
+			I graduate in January 2027 and am available from February. I'm open to remote roles anywhere, and to relocation with sponsorship. Email is the fastest
 			way to reach me: <a href="mailto:{profile.email}">{profile.email}</a>
 		</p>
 		<div class="cta">

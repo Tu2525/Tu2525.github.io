@@ -157,7 +157,7 @@ export const education = {
 	degree: 'B.Sc. Intelligent Systems Engineering',
 	school: 'Helwan National University',
 	place: 'Helwan, Egypt',
-	years: '2022 - 2027 (expected)'
+	years: '2022 - Jan 2027 (expected)'
 };
 
 export const certifications: { name: string; issuer: string }[] = [
