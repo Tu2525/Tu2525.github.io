@@ -32,7 +32,6 @@
 		const onClick = (e: MouseEvent) => {
 			const el = e.target as Element;
 			const track = el.closest?.('[data-track]')?.getAttribute('data-track');
-			// @ts-expect-error injected by count.js
 			if (track)
 				window.goatcounter?.count({ path: `track/${track}`, title: `track/${track}`, event: true });
 			const a = el.closest?.('a');
@@ -45,7 +44,6 @@
 					: url.origin !== location.origin
 						? `out/${url.host}${url.pathname}`
 						: '';
-			// @ts-expect-error injected by count.js
 			if (path) window.goatcounter?.count({ path, title: path, event: true });
 		};
 		document.addEventListener('click', onClick);

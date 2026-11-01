@@ -1,6 +1,9 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 declare global {
+	interface Window {
+		goatcounter?: { count(v: { path: string; title: string; event: boolean }): void };
+	}
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
