@@ -17,7 +17,12 @@
 	<span class="label" id="track-label">Viewing as</span>
 	<div class="options" role="group" aria-labelledby="track-label">
 		{#each tracks as t (t.id)}
-			<button type="button" aria-pressed={trackState.id === t.id} onclick={() => select(t.id)}>
+			<button
+				type="button"
+				aria-pressed={trackState.id === t.id}
+				data-track={t.id}
+				onclick={() => select(t.id)}
+			>
 				{t.label}
 			</button>
 		{/each}

@@ -30,7 +30,12 @@
 		s.dataset.goatcounter = `https://${GOATCOUNTER}.goatcounter.com/count`;
 		document.head.append(s);
 		const onClick = (e: MouseEvent) => {
-			const a = (e.target as Element).closest?.('a');
+			const el = e.target as Element;
+			const track = el.closest?.('[data-track]')?.getAttribute('data-track');
+			// @ts-expect-error injected by count.js
+			if (track)
+				window.goatcounter?.count({ path: `track/${track}`, title: `track/${track}`, event: true });
+			const a = el.closest?.('a');
 			if (!a) return;
 			const url = new URL(a.href, location.href);
 			const path = url.pathname.endsWith('.pdf')
@@ -115,7 +120,12 @@
 				>
 			{/each}
 		</nav>
-		<button class="find" type="button" onclick={() => palette?.show()} aria-label="Open command palette">
+		<button
+			class="find"
+			type="button"
+			onclick={() => palette?.show()}
+			aria-label="Open command palette"
+		>
 			<Icon name="search" /><span>Search</span><kbd>{mod} K</kbd>
 		</button>
 		<ThemeToggle />
