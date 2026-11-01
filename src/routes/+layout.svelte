@@ -16,7 +16,36 @@
 	let mod = $state('Ctrl');
 	onMount(() => {
 		if (/Mac|iPhone|iPad/.test(navigator.userAgent)) mod = '⌘';
+		return trackClicks();
 	});
+
+	// Invisible analytics (GoatCounter: no cookies, no UI). Dashboard: https://<code>.goatcounter.com
+	// Page views cover per-project traffic; CV downloads and GitHub/demo clicks are counted as events.
+	const GOATCOUNTER = 'tu2525';
+	function trackClicks() {
+		if (!GOATCOUNTER || location.hostname === 'localhost') return;
+		const s = document.createElement('script');
+		s.async = true;
+		s.src = '//gc.zgo.at/count.js';
+		s.dataset.goatcounter = `https://${GOATCOUNTER}.goatcounter.com/count`;
+		document.head.append(s);
+		const onClick = (e: MouseEvent) => {
+			const a = (e.target as Element).closest?.('a');
+			if (!a) return;
+			const url = new URL(a.href, location.href);
+			const path = url.pathname.endsWith('.pdf')
+				? `download${url.pathname.replace('/cv/', '/')}`
+				: url.protocol === 'mailto:'
+					? 'out/email'
+					: url.origin !== location.origin
+						? `out/${url.host}${url.pathname}`
+						: '';
+			// @ts-expect-error injected by count.js
+			if (path) window.goatcounter?.count({ path, title: path, event: true });
+		};
+		document.addEventListener('click', onClick);
+		return () => document.removeEventListener('click', onClick);
+	}
 
 	const isHome = $derived(page.url.pathname === '/');
 
