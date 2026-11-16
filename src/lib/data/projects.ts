@@ -114,8 +114,8 @@ export const projects: Project[] = [
 		demo: 'https://ahc-37u.pages.dev'
 	},
 	{
-		slug: 'tempo',
-		title: 'Tempo',
+		slug: 'leafpile',
+		title: 'Leafpile',
 		tagline: 'Study tracker for a small group of friends, installable on any phone',
 		year: 2026,
 		categories: ['web'],

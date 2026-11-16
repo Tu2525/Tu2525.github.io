@@ -10,7 +10,8 @@ const get = (path, accept = 'application/vnd.github+json') =>
 	fetch(`https://api.github.com/repos/${path}`, { headers: { ...headers, Accept: accept } });
 
 const data = existsSync(out) ? JSON.parse(readFileSync(out, 'utf8')) : {};
-const found = [...src.matchAll(/slug: '([^']+)'[\s\S]*?github\.com\/([\w.-]+\/[\w.-]+)'/g)];
+// The tempered `(?!slug: ')` keeps a project without a repo URL from borrowing the next project's.
+const found = [...src.matchAll(/slug: '([^']+)'(?:(?!slug: ')[\s\S])*?github\.com\/([\w.-]+\/[\w.-]+)'/g)];
 
 for (const [, slug, repo] of found) {
 	if (repo.startsWith('sonorahq/')) continue; // upstream README isn't mine
