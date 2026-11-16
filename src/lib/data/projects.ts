@@ -79,6 +79,58 @@ export const projects: Project[] = [
 		]
 	},
 	{
+		slug: 'geminiclaude',
+		title: 'GeminiClaude',
+		tagline: 'Claude Code plugin that hands routine work to Gemini models',
+		year: 2026,
+		categories: ['ai'],
+		stack: ['TypeScript', 'Claude Code plugin', 'Antigravity CLI', 'Gemini'],
+		summary:
+			'Claude writes the brief, the Antigravity CLI (agy) runs it on a Gemini model, and the reply comes back like a subagent result. It keeps Claude usage for the work that needs Claude.',
+		highlights: [
+			'A delegate tool that runs up to 5 Gemini tasks in parallel, one agy process each',
+			'A band above the prompt shows running agents, then the last run\'s model, time and tokens',
+			'Optional picker asks "Claude or Gemini?" before each subagent, and can send trivial briefs to Haiku'
+		],
+		code: { status: 'public', url: 'https://github.com/Tu2525/GeminiClaude' }
+	},
+	{
+		slug: 'zerog-pulse',
+		title: 'ZeroG Pulse',
+		tagline: 'Health self-assessment for astronauts on long missions',
+		year: 2026,
+		categories: ['web', 'systems'],
+		context: 'NASA Space Apps 2026',
+		stack: ['Rust', 'WebAssembly', 'React', 'TypeScript', 'egui', 'axum', 'Cloudflare Pages'],
+		summary:
+			'An astronaut taps a body figure, takes a guided measurement and sees what is fine and what is not. An escalation ladder says what to do, and a safe-mode console keeps working when the rich interface does not.',
+		highlights: [
+			'One Rust engine decides health status for every face, so the web app, safe-mode console and Ground Station cannot disagree',
+			'Four-step escalation ladder with a delayed link to the flight surgeon',
+			'All readings are simulated and every range is labelled sourced, adapted or placeholder'
+		],
+		team: 'Team project, I planned, reviewed and ran devops and the pitch',
+		code: { status: 'public', url: 'https://github.com/Tu2525/astronaut-health-companion' },
+		demo: 'https://ahc-37u.pages.dev'
+	},
+	{
+		slug: 'tempo',
+		title: 'Tempo',
+		tagline: 'Study tracker for a small group of friends, installable on any phone',
+		year: 2026,
+		categories: ['web'],
+		status: 'In progress',
+		stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Supabase', 'Web Push', 'PWA'],
+		summary:
+			'A study-time tracker with a GitHub-style heatmap, streak warnings, subjects, a friends leaderboard and a live "studying now" list. It is a PWA, so it installs from a link with no app store.',
+		highlights: [
+			'Live timer and manual entry, with push reminders before a streak is lost',
+			'Heatmap, streaks and leaderboard shared between friends through Supabase row-level security',
+			'Runs on iOS, Android and desktop from one codebase'
+		],
+		code: { status: 'private' }
+	},
+	{
 		slug: 'arne',
 		title: 'arne',
 		tagline: 'Claude Code plugin that routes each prompt to the cheapest model that can do it',
