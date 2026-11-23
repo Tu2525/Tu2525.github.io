@@ -175,8 +175,9 @@ img {
 
 @media (prefers-reduced-motion: no-preference) {
 	.rise {
-		animation: rise 0.7s var(--ease-out) both;
-		animation-delay: calc(var(--i, 0) * 70ms);
+		/* Short and tightly staggered: on a slow phone the hero must not sit invisible. */
+		animation: rise 0.4s var(--ease-out) both;
+		animation-delay: calc(var(--i, 0) * 40ms);
 	}
 
 	@supports (animation-timeline: view()) {

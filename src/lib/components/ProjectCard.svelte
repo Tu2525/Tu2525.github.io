@@ -238,6 +238,11 @@
 		min-height: 32px;
 		text-decoration: none;
 	}
+	@media (pointer: coarse) {
+		.actions a {
+			min-height: 44px;
+		}
+	}
 	.actions :global(svg) {
 		width: 16px;
 		height: 16px;
