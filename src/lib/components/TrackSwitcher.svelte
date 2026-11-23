@@ -76,6 +76,11 @@
 		cursor: pointer;
 		white-space: nowrap;
 	}
+	@media (pointer: coarse) {
+		button {
+			min-height: 44px;
+		}
+	}
 	button:hover {
 		color: var(--text);
 	}

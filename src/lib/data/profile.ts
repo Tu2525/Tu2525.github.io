@@ -23,6 +23,19 @@ export interface Role {
 // Newest first. Work code is private, so roles never link to code unless the employer made it public.
 export const experience: Role[] = [
 	{
+		title: 'Open Source Contributor',
+		org: 'Sonora (sonorahq)',
+		start: '2026',
+		end: 'Present',
+		place: 'Remote · Open source',
+		bullets: [
+			'Six merged PRs to a native Rust music client (2.5k+ stars): Spotify Connect (+2.9k lines), Jams, and right-to-left text support',
+			'Fixed a librespot bug that dropped plain-JSON dealer messages, which had hidden Liked Songs updates',
+			'Kept Connect behind a provider-neutral trait so the rest of the app never touches Spotify directly'
+		],
+		link: { label: 'Project', url: '/projects/sonora' }
+	},
+	{
 		title: 'Generative AI Engineer',
 		org: 'Digital Egypt Pioneers Initiative',
 		start: 'Nov 2025',

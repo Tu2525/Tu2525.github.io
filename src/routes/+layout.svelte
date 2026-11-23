@@ -187,6 +187,8 @@
 		font-family: var(--font-display);
 		font-weight: 600;
 		margin-right: auto;
+		min-height: 44px;
+		min-width: 44px;
 	}
 	.mark {
 		display: grid;
@@ -203,7 +205,10 @@
 		gap: 4px;
 	}
 	nav a {
-		padding: 8px 12px;
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0 12px;
 		border-radius: 999px;
 		text-decoration: none;
 		font-size: var(--fs-small);
@@ -252,7 +257,7 @@
 			gap: 6px;
 		}
 		nav a {
-			padding: 8px 6px;
+			padding: 0 6px;
 		}
 	}
 
