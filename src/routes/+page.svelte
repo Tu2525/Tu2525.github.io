@@ -38,6 +38,10 @@
 	let showAll = $state(false);
 	const visible = $derived(showAll ? shown : shown.slice(0, LIMIT));
 
+	// On phones only the newest roles show; older ones sit behind a button (CSS keeps desktop whole).
+	const RECENT = 5;
+	let showOlder = $state(false);
+
 	// Real repo activity from the build-time GitHub sync, newest push first.
 	const recent = projects
 		.map((p) => ({ p, r: repoInfo(p.slug) }))
@@ -50,7 +54,7 @@
 	const stats = [
 		{ value: '1st', label: 'Leaders of Tomorrow hackathon' },
 		{ value: '1st', label: 'YLF Hackathon 2026' },
-		{ value: '6', label: 'PRs merged into Sonora, a Rust music client' },
+		{ value: '6', label: 'internships across backend, mobile and data' },
 		{ value: '15+', label: 'students taught ML and Flutter' }
 	];
 
@@ -211,9 +215,9 @@
 <section class="section" id="experience">
 	<div class="wrap">
 			<h2 class="section-title">Experience</h2>
-		<ol class="timeline">
-			{#each experience as r (r.title + r.org)}
-				<li>
+		<ol class="timeline" class:expanded={showOlder}>
+			{#each experience as r, i (r.title + r.org)}
+				<li class:older={i >= RECENT}>
 					<div class="when">
 						<span>{r.start} - {r.end}</span>
 						<span class="place">{r.place}</span>
@@ -233,6 +237,16 @@
 				</li>
 			{/each}
 		</ol>
+		{#if experience.length > RECENT}
+			<button
+				type="button"
+				class="show-all show-older"
+				aria-expanded={showOlder}
+				onclick={() => (showOlder = !showOlder)}
+			>
+				{showOlder ? 'Show fewer roles' : `Show ${experience.length - RECENT} older roles`}
+			</button>
+		{/if}
 		<p class="note">
 			<Icon name="lock" />Code I wrote for employers and clients stays private. Happy to walk
 			through it in an interview.
@@ -737,7 +751,27 @@
 		height: 16px;
 		flex: none;
 	}
+	.show-older {
+		display: none;
+	}
+	@media (pointer: coarse) {
+		.role-link {
+			min-height: 44px;
+			margin-top: 4px;
+		}
+	}
 	@media (max-width: 720px) {
+		.timeline {
+			gap: 32px;
+		}
+		.timeline:not(.expanded) > li.older {
+			display: none;
+		}
+		.show-older {
+			display: inline-flex;
+			align-items: center;
+			margin-top: 28px;
+		}
 		.timeline > li {
 			grid-template-columns: 1fr;
 			gap: 8px;

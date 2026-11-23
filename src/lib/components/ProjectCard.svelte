@@ -231,6 +231,16 @@
 	.card:not(.lead) .actions {
 		order: 1;
 	}
+	/* Phones: keep the card to title, one line and tags; the bullets live on the project page. */
+	@media (max-width: 640px) {
+		.card {
+			padding: 20px;
+			gap: 14px;
+		}
+		.highlights {
+			display: none;
+		}
+	}
 	.actions a {
 		display: inline-flex;
 		align-items: center;
