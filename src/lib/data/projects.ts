@@ -303,7 +303,6 @@ export const projects: Project[] = [
 		tagline: 'A zero-impact game clipper for Windows, written in Rust',
 		year: 2026,
 		categories: ['systems'],
-		status: 'In progress',
 		stack: [
 			'Rust',
 			'egui',
@@ -319,7 +318,7 @@ export const projects: Project[] = [
 			'Zero-copy capture: frames go from the compositor to the hardware encoder without leaving VRAM',
 			'GOP-aware DVR buffer and fragmented containers, so every clip decodes and survives a crash'
 		],
-		code: { status: 'soon', url: 'https://github.com/Tu2525/zeroclip' },
+		code: { status: 'public', url: 'https://github.com/zeroclip-dev/zeroclip' },
 		detail: [
 			{
 				heading: 'Design',
